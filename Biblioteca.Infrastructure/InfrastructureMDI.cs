@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Biblioteca.Infrastructure
 {
-    public static class InfrastructureMDI
+    public static class InfrastructureDI
     {
        public static void AddRepositories(IServiceCollection services)
         {

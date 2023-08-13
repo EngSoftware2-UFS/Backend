@@ -14,8 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Application services
-ServicesMDI.AddServices(builder.Services);
-InfrastructureMDI.AddRepositories(builder.Services);
+ServicesDI.AddServices(builder.Services);
+InfrastructureDI.AddRepositories(builder.Services);
 
 var app = builder.Build();
 

@@ -40,7 +40,7 @@ namespace Biblioteca.Services
             throw new NotImplementedException();
         }
 
-        public void Update(AddTesteRequest entity)
+        public void Update(AddTesteRequest testeData)
         {
             throw new NotImplementedException();
         }

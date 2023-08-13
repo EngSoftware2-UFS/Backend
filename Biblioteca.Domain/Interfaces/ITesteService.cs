@@ -5,10 +5,10 @@ namespace Biblioteca.Domain.Interfaces
 {
     public interface ITesteService
     {
-        Task Add(AddTesteRequest entity);
+        Task Add(AddTesteRequest testeData);
         Task<List<GetTesteResponse>> GetAll();
         Task<GetTesteResponse?> GetById(int id);
-        void Update(AddTesteRequest entity);
+        void Update(AddTesteRequest testeData);
         Task Delete(int id);
     }
 }

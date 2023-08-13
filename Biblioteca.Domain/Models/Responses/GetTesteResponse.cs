@@ -2,13 +2,14 @@
 {
     public class GetTesteResponse
     {
-        public string Id { get; private set; }
+        public int Id { get; private set; }
         public string Name { get; private set; }
         public string Descriptino { get; private set; }
         public bool IsActive { get; private set; }
 
-        public GetTesteResponse(string name, string descriptino, bool isActive)
+        public GetTesteResponse(int id, string name, string descriptino, bool isActive)
         {
+            Id = id;
             Name = name;
             Descriptino = descriptino;
             IsActive = isActive;

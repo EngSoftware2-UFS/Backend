@@ -18,8 +18,6 @@ namespace Biblioteca.Domain.Entities
             IsActive = isActive;
         }
 
-        public Teste()
-        {
-        }
+        public Teste() { }
     }
 }

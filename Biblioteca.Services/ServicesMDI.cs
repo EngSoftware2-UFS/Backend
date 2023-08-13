@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Biblioteca.Services
 {
-    public static class ServicesMDI
+    public static class ServicesDI
     {
         public static void AddServices(IServiceCollection services)
         {
