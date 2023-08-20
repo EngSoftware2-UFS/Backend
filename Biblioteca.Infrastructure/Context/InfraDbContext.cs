@@ -5,9 +5,8 @@ namespace Biblioteca.Infrastructure.Context
 {
     public class InfraDbContext : DbContext
     {
-        //public InfraDbContext(DbContextOptions<InfraDbContext> options) : base(options) { }
+        public InfraDbContext(DbContextOptions<InfraDbContext> options) : base(options) { }
 
-        public DbSet<Teste> Testes { get; set; }
         public DbSet<Atendente> Atendentes { get; set; }
         public DbSet<Autor> Autores { get; set; }
         public DbSet<Bibliotecario> Bibliotecarios { get; set; }

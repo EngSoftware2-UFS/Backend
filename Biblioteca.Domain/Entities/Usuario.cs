@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Biblioteca.Domain.Entities
 {
     public abstract class Usuario
     {
+        [Key]
         public ulong Id { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
@@ -17,6 +19,6 @@ namespace Biblioteca.Domain.Entities
         public DateTime DataCadastro { get; set; }
 
         public ulong EdenrecoId { get; set; }
-        public virtual Endereco Endereco { get;set; }
+        public virtual Endereco Endereco { get; set; }
     }
 }

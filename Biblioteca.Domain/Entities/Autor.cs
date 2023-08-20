@@ -9,6 +9,7 @@ namespace Biblioteca.Domain.Entities
 {
     public class Autor
     {
+        [Key]
         public ulong Id { get; set; }
         
         [Required]

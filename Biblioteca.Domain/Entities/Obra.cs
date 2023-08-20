@@ -9,6 +9,7 @@ namespace Biblioteca.Domain.Entities
 {
     public class Obra
     {
+        [Key]
         public ulong Id { get; set; }
 
         [Required]
@@ -21,9 +22,10 @@ namespace Biblioteca.Domain.Entities
         
         public ulong EditoraId { get; set; }
 
-        public virtual Editora Editora { get; set; }
-        public virtual ICollection<ObraAutor> ObraAutores { get; set; }
-        public virtual ICollection<ObraGenero> ObraGeneros { get; set; }
+        public virtual Editora? Editora { get; set; }
+        public virtual ICollection<ObraAutor>? ObraAutores { get; set; }
+        public virtual ICollection<ObraGenero>? ObraGeneros { get; set; }
+        public virtual ICollection<Exemplar>? Exemplares { get; set; }
 
     }
 }

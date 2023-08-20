@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace Biblioteca.Domain.Entities
 {
     public class Emprestimo
     {
+        [Key]
         public ulong Id { get; set; }
 
         public DateTime DataEmprestimo { get; set; }
@@ -24,5 +26,7 @@ namespace Biblioteca.Domain.Entities
 
         public ulong ClienteId { get; set; }
         public virtual Cliente Cliente { get; set; }
+
+        public virtual ICollection<Multa> Multas { get; set; }
     }
 }
