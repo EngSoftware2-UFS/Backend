@@ -12,14 +12,12 @@ namespace Biblioteca.Domain.Entities
     {
         [Key]
         public ulong Id { get; set; }
-        public string Codigo { get; set; }
-        public string Estado { get; set; }
         public bool Disponivel { get; set; }
         [Required]
         public ulong ObraId { get; set; }
         public virtual Obra Obra { get; set; }
 
-        public virtual ICollection<Reserva> Reservas { get; set; }
+        public virtual ICollection<Reserva> HistoricoReservas { get; set; }
 
     }
 }

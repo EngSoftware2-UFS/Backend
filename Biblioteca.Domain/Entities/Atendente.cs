@@ -8,5 +8,6 @@ namespace Biblioteca.Domain.Entities
 {
     public class Atendente : Usuario
     {
+        public virtual ICollection<Emprestimo> HistoricoEmprestimos { get; set; }
     }
 }

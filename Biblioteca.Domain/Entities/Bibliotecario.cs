@@ -8,5 +8,6 @@ namespace Biblioteca.Domain.Entities
 {
     public class Bibliotecario : Usuario
     {
+        public virtual ICollection<Obra> ObrasCadastradas { get; set; }
     }
 }

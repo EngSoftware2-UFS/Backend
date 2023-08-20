@@ -21,11 +21,14 @@ namespace Biblioteca.Domain.Entities
         public string Edicao { get; set; }
         
         public ulong EditoraId { get; set; }
-
         public virtual Editora? Editora { get; set; }
-        public virtual ICollection<ObraAutor>? ObraAutores { get; set; }
-        public virtual ICollection<ObraGenero>? ObraGeneros { get; set; }
-        public virtual ICollection<Exemplar>? Exemplares { get; set; }
+
+        [Required]
+        public ulong BibliotecarioId { get; set; }
+        public virtual Bibliotecario BibliotecarioCadastro { get; set; }
+        public virtual ICollection<ObraAutor> ObraAutores { get; set; }
+        public virtual ICollection<ObraGenero> ObraGeneros { get; set; }
+        public virtual ICollection<Exemplar> Exemplares { get; set; }
 
     }
 }
