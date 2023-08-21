@@ -9,14 +9,14 @@ namespace Biblioteca.Domain.Models.Requests
         public string Email { get; private set; }
         public string Senha { get; private set; }
         public DateTime DataCadastro { get; private set; }
-        public virtual Endereco? Endereco { get; private set; }
+        public virtual AddEnderecoRequest Endereco { get; private set; }
 
         public AddAtendenteRequest(string nome,
             string cpf,
             string email,
             string senha,
             DateTime dataCadastro,
-            Endereco? endereco)
+            AddEnderecoRequest endereco)
         {
             Nome = nome;
             CPF = cpf;

@@ -5,10 +5,12 @@ namespace Biblioteca.Domain.Interfaces
 {
     public interface IAtendenteService
     {
-        Task Add(AddAtendenteRequest testeData);
-        Task<List<GetAtendenteResponse>> GetAll();
-        Task<GetAtendenteResponse?> GetById(ulong id);
-        void Update(AddAtendenteRequest testeData);
+        Task Add(AddAtendenteRequest request);
+        Task<List<AtendenteResponse>> GetAll();
+        Task<AtendenteResponse?> GetById(ulong id);
+        Task<AtendenteResponse?> GetByCpf(string cpf);
+        Task<List<AtendenteResponse>> GetByName(string name);
+        void Update(AddAtendenteRequest request);
         Task Delete(ulong id);
     }
 }
