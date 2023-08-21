@@ -8,6 +8,8 @@ namespace Biblioteca.Services
         public static void AddServices(IServiceCollection services)
         {
             services.AddScoped<IAtendenteService, AtendenteService>();
+            services.AddScoped<IBibliotecarioService, BibliotecarioService>();
+            services.AddScoped<IClienteService, ClienteService>();
         }
     }
 }

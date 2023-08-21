@@ -18,6 +18,9 @@ namespace Biblioteca.Infrastructure
             });
 
             services.AddScoped<IAtendenteRepository, AtendenteRepository>();
+            services.AddScoped<IBibliotecarioRepository, BibliotecarioRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IReservaRepository, ReservaRepository>();
         }
     }
 }
