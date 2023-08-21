@@ -10,11 +10,18 @@ namespace Biblioteca.Services.Mappers
         public FuncionarioMapper()
         {
             // Atendente
-            CreateMap<Atendente, GetAtendenteResponse>();
+            CreateMap<Atendente, AtendenteResponse>();
             CreateMap<AddAtendenteRequest, Atendente>();
             // Bibliotecario
             CreateMap<Bibliotecario, GetBibliotecarioResponse>();
             CreateMap<AddBibliotecarioRequest, Bibliotecario>();
+            // Cliente
+            CreateMap<AddClienteRequest, Cliente>();
+
+            CreateMap<AddEnderecoRequest, Endereco>();
+            CreateMap<Endereco, EnderecoResponse>();
+
+            CreateMap<Emprestimo, AtendenteEmprestimoResponse>();
         }
     }
 }
