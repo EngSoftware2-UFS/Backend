@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,8 @@ namespace Biblioteca.Domain.Entities
         public ulong Id { get; set; }
         public bool Inadimplencia { get; set; }
         public Double Valor { get; set; }
-
         public ulong EmprestimoId { get; set; }
+        [ForeignKey("EmprestimoId")]
         public virtual Emprestimo Emprestimo { get; set; }
     }
 }

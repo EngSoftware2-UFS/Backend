@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -13,11 +14,10 @@ namespace Biblioteca.Domain.Entities
         [Key]
         public ulong Id { get; set; }
         public bool Disponivel { get; set; }
-        [Required]
         public ulong ObraId { get; set; }
+        [Required]
+        [ForeignKey("ObraId")]
         public virtual Obra Obra { get; set; }
-
-        public virtual ICollection<Reserva> HistoricoReservas { get; set; }
 
     }
 }

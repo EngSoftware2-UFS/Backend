@@ -14,7 +14,6 @@ namespace Biblioteca.Domain.Entities
         
         [Required]
         public string Nome { get; set; }
-        public ICollection<ObraAutor> ObraAutores { get; set; }
 
     }
 }

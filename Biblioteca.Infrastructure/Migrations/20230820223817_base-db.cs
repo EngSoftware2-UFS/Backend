@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Biblioteca.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class basedb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace Biblioteca.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Autores",
+                name: "Autor",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
@@ -26,12 +26,35 @@ namespace Biblioteca.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Autores", x => x.Id);
+                    table.PrimaryKey("PK_Autor", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Editoras",
+                name: "Cliente",
+                columns: table => new
+                {
+                    Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CPF = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Senha = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DataCadastro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Bloqueio = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cliente", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Editora",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
@@ -43,35 +66,35 @@ namespace Biblioteca.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Editoras", x => x.Id);
+                    table.PrimaryKey("PK_Editora", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Endereco",
+                name: "Enderecos",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Logradouro = table.Column<string>(type: "longtext", nullable: false)
+                    Logradouro = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Numero = table.Column<string>(type: "longtext", nullable: false)
+                    Numero = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Bairro = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Cidade = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Complemento = table.Column<string>(type: "longtext", nullable: false)
+                    Complemento = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Endereco", x => x.Id);
+                    table.PrimaryKey("PK_Enderecos", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Generos",
+                name: "Genero",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
@@ -83,54 +106,7 @@ namespace Biblioteca.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Generos", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Testes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Descriptino = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Testes", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Obras",
-                columns: table => new
-                {
-                    Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Titulo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Idioma = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Ano = table.Column<uint>(type: "int unsigned", nullable: false),
-                    ISBN = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Edicao = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EditoraId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Obras", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Obras_Editoras_EditoraId",
-                        column: x => x.EditoraId,
-                        principalTable: "Editoras",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Genero", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -149,23 +125,22 @@ namespace Biblioteca.Infrastructure.Migrations
                     Senha = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DataCadastro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    EdenrecoId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
                     EnderecoId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Atendentes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Atendentes_Endereco_EnderecoId",
+                        name: "FK_Atendentes_Enderecos_EnderecoId",
                         column: x => x.EnderecoId,
-                        principalTable: "Endereco",
+                        principalTable: "Enderecos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Bibliotecarios",
+                name: "Bibliotecario",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
@@ -179,105 +154,79 @@ namespace Biblioteca.Infrastructure.Migrations
                     Senha = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DataCadastro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    EdenrecoId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
                     EnderecoId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bibliotecarios", x => x.Id);
+                    table.PrimaryKey("PK_Bibliotecario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Bibliotecarios_Endereco_EnderecoId",
+                        name: "FK_Bibliotecario_Enderecos_EnderecoId",
                         column: x => x.EnderecoId,
-                        principalTable: "Endereco",
+                        principalTable: "Enderecos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Clientes",
+                name: "Obra",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Bloqueio = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Nome = table.Column<string>(type: "longtext", nullable: false)
+                    Titulo = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CPF = table.Column<string>(type: "longtext", nullable: false)
+                    Idioma = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Email = table.Column<string>(type: "longtext", nullable: false)
+                    Ano = table.Column<uint>(type: "int unsigned", nullable: false),
+                    ISBN = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Senha = table.Column<string>(type: "longtext", nullable: false)
+                    Edicao = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    DataCadastro = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    EdenrecoId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                    EnderecoId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
+                    EditoraId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
+                    BibliotecarioCadastroId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
+                    table.PrimaryKey("PK_Obra", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Clientes_Endereco_EnderecoId",
-                        column: x => x.EnderecoId,
-                        principalTable: "Endereco",
+                        name: "FK_Obra_Bibliotecario_BibliotecarioCadastroId",
+                        column: x => x.BibliotecarioCadastroId,
+                        principalTable: "Bibliotecario",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Obra_Editora_EditoraId",
+                        column: x => x.EditoraId,
+                        principalTable: "Editora",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Exemplares",
+                name: "Exemplar",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Codigo = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Estado = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Disponivel = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ObraId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exemplares", x => x.Id);
+                    table.PrimaryKey("PK_Exemplar", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exemplares_Obras_ObraId",
+                        name: "FK_Exemplar_Obra_ObraId",
                         column: x => x.ObraId,
-                        principalTable: "Obras",
+                        principalTable: "Obra",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ObraGeneros",
-                columns: table => new
-                {
-                    ObraId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                    GeneroId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                    Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ObraGeneros", x => new { x.ObraId, x.GeneroId });
-                    table.ForeignKey(
-                        name: "FK_ObraGeneros_Generos_GeneroId",
-                        column: x => x.GeneroId,
-                        principalTable: "Generos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ObraGeneros_Obras_ObraId",
-                        column: x => x.ObraId,
-                        principalTable: "Obras",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "ObrasAutores",
+                name: "ObraAutor",
                 columns: table => new
                 {
                     AutorId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
@@ -285,31 +234,56 @@ namespace Biblioteca.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ObrasAutores", x => new { x.ObraId, x.AutorId });
+                    table.PrimaryKey("PK_ObraAutor", x => new { x.ObraId, x.AutorId });
                     table.ForeignKey(
-                        name: "FK_ObrasAutores_Autores_ObraId",
-                        column: x => x.ObraId,
-                        principalTable: "Autores",
+                        name: "FK_ObraAutor_Autor_ObraId",
+                        column: x => x.AutorId,
+                        principalTable: "Autor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ObrasAutores_Obras_ObraId",
+                        name: "FK_ObraAutor_Obra_ObraId",
                         column: x => x.ObraId,
-                        principalTable: "Obras",
+                        principalTable: "Obra",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Emprestimos",
+                name: "ObraGenero",
+                columns: table => new
+                {
+                    ObraId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
+                    GeneroId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObraGenero", x => new { x.ObraId, x.GeneroId });
+                    table.ForeignKey(
+                        name: "FK_ObraGenero_Genero_GeneroId",
+                        column: x => x.GeneroId,
+                        principalTable: "Genero",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ObraGenero_Obra_ObraId",
+                        column: x => x.ObraId,
+                        principalTable: "Obra",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Emprestimo",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     DataEmprestimo = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DataDevolucao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    PrazoDevolução = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    PrazoDevolucao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     QuantidadeRenovacao = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -319,30 +293,30 @@ namespace Biblioteca.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Emprestimos", x => x.Id);
+                    table.PrimaryKey("PK_Emprestimo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Emprestimos_Atendentes_AtendenteId",
+                        name: "FK_Emprestimo_Atendentes_AtendenteId",
                         column: x => x.AtendenteId,
                         principalTable: "Atendentes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Emprestimos_Clientes_ClienteId",
+                        name: "FK_Emprestimo_Cliente_ClienteId",
                         column: x => x.ClienteId,
-                        principalTable: "Clientes",
+                        principalTable: "Cliente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Emprestimos_Exemplares_ExemplarId",
+                        name: "FK_Emprestimo_Exemplar_ExemplarId",
                         column: x => x.ExemplarId,
-                        principalTable: "Exemplares",
+                        principalTable: "Exemplar",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Reservas",
+                name: "Reserva",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
@@ -355,24 +329,24 @@ namespace Biblioteca.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservas", x => x.Id);
+                    table.PrimaryKey("PK_Reserva", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservas_Clientes_ClienteId",
+                        name: "FK_Reserva_Cliente_ClienteId",
                         column: x => x.ClienteId,
-                        principalTable: "Clientes",
+                        principalTable: "Cliente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reservas_Exemplares_ExemplarId",
+                        name: "FK_Reserva_Exemplar_ExemplarId",
                         column: x => x.ExemplarId,
-                        principalTable: "Exemplares",
+                        principalTable: "Exemplar",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Multas",
+                name: "Multa",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "bigint unsigned", nullable: false)
@@ -383,11 +357,11 @@ namespace Biblioteca.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Multas", x => x.Id);
+                    table.PrimaryKey("PK_Multa", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Multas_Emprestimos_EmprestimoId",
+                        name: "FK_Multa_Emprestimo_EmprestimoId",
                         column: x => x.EmprestimoId,
-                        principalTable: "Emprestimos",
+                        principalTable: "Emprestimo",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -399,58 +373,58 @@ namespace Biblioteca.Infrastructure.Migrations
                 column: "EnderecoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bibliotecarios_EnderecoId",
-                table: "Bibliotecarios",
+                name: "IX_Bibliotecario_EnderecoId",
+                table: "Bibliotecario",
                 column: "EnderecoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clientes_EnderecoId",
-                table: "Clientes",
-                column: "EnderecoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Emprestimos_AtendenteId",
-                table: "Emprestimos",
+                name: "IX_Emprestimo_AtendenteId",
+                table: "Emprestimo",
                 column: "AtendenteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Emprestimos_ClienteId",
-                table: "Emprestimos",
+                name: "IX_Emprestimo_ClienteId",
+                table: "Emprestimo",
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Emprestimos_ExemplarId",
-                table: "Emprestimos",
+                name: "IX_Emprestimo_ExemplarId",
+                table: "Emprestimo",
                 column: "ExemplarId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exemplares_ObraId",
-                table: "Exemplares",
+                name: "IX_Exemplar_ObraId",
+                table: "Exemplar",
                 column: "ObraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Multas_EmprestimoId",
-                table: "Multas",
+                name: "IX_Multa_EmprestimoId",
+                table: "Multa",
                 column: "EmprestimoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ObraGeneros_GeneroId",
-                table: "ObraGeneros",
-                column: "GeneroId");
+                name: "IX_Obra_BibliotecarioCadastroId",
+                table: "Obra",
+                column: "BibliotecarioCadastroId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Obras_EditoraId",
-                table: "Obras",
+                name: "IX_Obra_EditoraId",
+                table: "Obra",
                 column: "EditoraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_ClienteId",
-                table: "Reservas",
+                name: "IX_ObraGenero_GeneroId",
+                table: "ObraGenero",
+                column: "GeneroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reserva_ClienteId",
+                table: "Reserva",
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_ExemplarId",
-                table: "Reservas",
+                name: "IX_Reserva_ExemplarId",
+                table: "Reserva",
                 column: "ExemplarId");
         }
 
@@ -458,49 +432,46 @@ namespace Biblioteca.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Bibliotecarios");
+                name: "Multa");
 
             migrationBuilder.DropTable(
-                name: "Multas");
+                name: "ObraAutor");
 
             migrationBuilder.DropTable(
-                name: "ObraGeneros");
+                name: "ObraGenero");
 
             migrationBuilder.DropTable(
-                name: "ObrasAutores");
+                name: "Reserva");
 
             migrationBuilder.DropTable(
-                name: "Reservas");
+                name: "Emprestimo");
 
             migrationBuilder.DropTable(
-                name: "Testes");
+                name: "Autor");
 
             migrationBuilder.DropTable(
-                name: "Emprestimos");
-
-            migrationBuilder.DropTable(
-                name: "Generos");
-
-            migrationBuilder.DropTable(
-                name: "Autores");
+                name: "Genero");
 
             migrationBuilder.DropTable(
                 name: "Atendentes");
 
             migrationBuilder.DropTable(
-                name: "Clientes");
+                name: "Cliente");
 
             migrationBuilder.DropTable(
-                name: "Exemplares");
+                name: "Exemplar");
 
             migrationBuilder.DropTable(
-                name: "Endereco");
+                name: "Obra");
 
             migrationBuilder.DropTable(
-                name: "Obras");
+                name: "Bibliotecario");
 
             migrationBuilder.DropTable(
-                name: "Editoras");
+                name: "Editora");
+
+            migrationBuilder.DropTable(
+                name: "Enderecos");
         }
     }
 }

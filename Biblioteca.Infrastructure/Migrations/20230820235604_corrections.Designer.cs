@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biblioteca.Infrastructure.Migrations
 {
     [DbContext(typeof(InfraDbContext))]
-    [Migration("20230820203534_adjustments")]
-    partial class adjustments
+    [Migration("20230820235604_corrections")]
+    partial class corrections
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,9 +34,6 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<ulong>("EdenrecoId")
-                        .HasColumnType("bigint unsigned");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -72,7 +69,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Autores");
+                    b.ToTable("Autor");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Bibliotecario", b =>
@@ -87,9 +84,6 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<ulong>("EdenrecoId")
-                        .HasColumnType("bigint unsigned");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -110,7 +104,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasIndex("EnderecoId");
 
-                    b.ToTable("Bibliotecarios");
+                    b.ToTable("Bibliotecario");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Cliente", b =>
@@ -129,9 +123,6 @@ namespace Biblioteca.Infrastructure.Migrations
                     b.Property<DateTime>("DataCadastro")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<ulong>("EdenrecoId")
-                        .HasColumnType("bigint unsigned");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -151,7 +142,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasIndex("EnderecoId");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Cliente");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Editora", b =>
@@ -170,7 +161,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Editoras");
+                    b.ToTable("Editora");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Emprestimo", b =>
@@ -212,7 +203,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasIndex("ExemplarId");
 
-                    b.ToTable("Emprestimos");
+                    b.ToTable("Emprestimo");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Endereco", b =>
@@ -259,7 +250,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasIndex("ObraId");
 
-                    b.ToTable("Exemplares");
+                    b.ToTable("Exemplar");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Genero", b =>
@@ -278,7 +269,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Generos");
+                    b.ToTable("Genero");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Multa", b =>
@@ -300,7 +291,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasIndex("EmprestimoId");
 
-                    b.ToTable("Multas");
+                    b.ToTable("Multa");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Obra", b =>
@@ -312,7 +303,7 @@ namespace Biblioteca.Infrastructure.Migrations
                     b.Property<uint>("Ano")
                         .HasColumnType("int unsigned");
 
-                    b.Property<ulong>("BibliotecarioId")
+                    b.Property<ulong>("BibliotecarioCadastroId")
                         .HasColumnType("bigint unsigned");
 
                     b.Property<string>("Edicao")
@@ -336,11 +327,11 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BibliotecarioId");
+                    b.HasIndex("BibliotecarioCadastroId");
 
                     b.HasIndex("EditoraId");
 
-                    b.ToTable("Obras");
+                    b.ToTable("Obra");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.ObraAutor", b =>
@@ -353,7 +344,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasKey("ObraId", "AutorId");
 
-                    b.ToTable("ObrasAutores");
+                    b.ToTable("ObraAutor");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.ObraGenero", b =>
@@ -368,7 +359,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasIndex("GeneroId");
 
-                    b.ToTable("ObraGeneros");
+                    b.ToTable("ObraGenero");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Reserva", b =>
@@ -396,7 +387,7 @@ namespace Biblioteca.Infrastructure.Migrations
 
                     b.HasIndex("ExemplarId");
 
-                    b.ToTable("Reservas");
+                    b.ToTable("Reserva");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Atendente", b =>
@@ -485,7 +476,7 @@ namespace Biblioteca.Infrastructure.Migrations
                 {
                     b.HasOne("Biblioteca.Domain.Entities.Bibliotecario", "BibliotecarioCadastro")
                         .WithMany("ObrasCadastradas")
-                        .HasForeignKey("BibliotecarioId")
+                        .HasForeignKey("BibliotecarioCadastroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
