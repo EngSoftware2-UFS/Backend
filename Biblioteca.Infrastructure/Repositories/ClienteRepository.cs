@@ -2,6 +2,8 @@
 using Biblioteca.Infrastructure.Repositories.Interfaces;
 using Biblioteca.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Biblioteca.Domain.Models.Responses;
+using Biblioteca.Domain.Views;
 
 namespace Biblioteca.Infrastructure.Repositories
 {
@@ -31,6 +33,7 @@ namespace Biblioteca.Infrastructure.Repositories
         {
             return await _context.Set<Cliente>()
                 .Include(cliente => cliente.Endereco)
+                .Include(cliente => cliente.Reservas)
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
@@ -38,7 +41,7 @@ namespace Biblioteca.Infrastructure.Repositories
         {
             return await _context.Set<Cliente>()
                 .Include(cliente => cliente.Endereco)
-                .Where(x => x.CPF == cpf).FirstOrDefaultAsync();
+                .Where(x => x.Cpf == cpf).FirstOrDefaultAsync();
         }
 
         public async Task<List<Cliente>> GetByName(string name)
@@ -46,6 +49,21 @@ namespace Biblioteca.Infrastructure.Repositories
             return await _context.Set<Cliente>()
                 .Include(cliente => cliente.Endereco)
                 .Where(x => x.Nome.Contains(name)).ToListAsync();
+        }
+
+        public async Task<List<ReservasView>> GetReservas(ulong clientId)
+        {
+            //FormattableString query = $@"SELECT r.id, r.dataReserva, r.status, o.titulo, a.nome
+            //                            FROM reservaExemplar re 
+            //                            JOIN reservas r ON (re.reservaId = r.id) 
+            //                            JOIN exemplares e ON (re.exemplarId = e.id) 
+            //                            JOIN obras o ON (o.id = e.obraId)
+            //                            JOIN obrasautores oa ON (o.id = oa.obraId) 
+            //                            JOIN autores a ON (a.id = oa.autorId)
+            //                            WHERE r.clienteId = {clientId} AND r.id = 2";
+
+            //var result = _context.Database.SqlQuery<HistoricoReservas2>(query);
+            return await _context.ReservasView.Where(e => e.ClienteId == clientId).ToListAsync();
         }
 
         public void Update(Cliente entity)

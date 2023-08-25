@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Biblioteca.Domain.Entities;
+namespace Biblioteca.Infrastructure.scaffold;
 
 public partial class Atendente
 {
@@ -14,7 +13,6 @@ public partial class Atendente
 
     public string Email { get; set; } = null!;
 
-    [JsonIgnore]
     public string Senha { get; set; } = null!;
 
     public DateTime DataCadastro { get; set; }

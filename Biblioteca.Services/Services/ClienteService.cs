@@ -6,6 +6,7 @@ using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
 using System.Collections.Generic;
 using Biblioteca.Domain.Enums;
+using Biblioteca.Domain.Views;
 
 namespace Biblioteca.Services
 {
@@ -77,7 +78,16 @@ namespace Biblioteca.Services
             return reservas.Where(e => e.Status == EStatusReserva.ATIVA.ToString()).ToList();
         }
 
-        public async Task<List<Reserva>> GetHistoricoReservas(ulong idCliente)
+        public async Task<List<HistoricoReservas>> GetHistoricoReservas(ulong idCliente)
+        {
+            List<ReservasView>? result = await _clienteRepository.GetReservas(idCliente);
+            if (result == null)
+                throw new KeyNotFoundException("Not Found.");
+
+            return _autoMapper.Map<List<HistoricoReservas>>(result);
+        }
+
+        public async Task<List<Reserva>> GetHistoricoReservas2(ulong idCliente)
         {
             Cliente? result = await _clienteRepository.GetById(idCliente);
             if (result == null)

@@ -63,7 +63,7 @@ namespace Biblioteca.Application.Controllers
         [HttpGet("{idCliente}/reservas/historico")]
         public async Task<IActionResult> GetHistoricoReservas(ulong idCliente)
         {
-            List<Reserva> results = await _clienteService.GetHistoricoReservas(idCliente);
+            List<HistoricoReservas> results = await _clienteService.GetHistoricoReservas(idCliente);
             return Ok(results);
         }
 

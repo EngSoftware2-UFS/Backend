@@ -1,4 +1,5 @@
-﻿using Biblioteca.Domain.Entities;
+﻿using System.Text.Json.Serialization;
+using BC = BCrypt.Net.BCrypt;
 
 namespace Biblioteca.Domain.Models.Requests
 {
@@ -8,22 +9,19 @@ namespace Biblioteca.Domain.Models.Requests
         public string CPF { get; private set; }
         public string Email { get; private set; }
         public string Senha { get; private set; }
+        [JsonIgnore]
         public DateTime DataCadastro { get; private set; }
-        public virtual AddEnderecoRequest Endereco { get; private set; }
 
         public AddBibliotecarioRequest(string nome,
             string cpf,
             string email,
-            string senha,
-            DateTime dataCadastro,
-            AddEnderecoRequest endereco)
+            string senha)
         {
             Nome = nome;
             CPF = cpf;
             Email = email;
-            Senha = senha;
-            DataCadastro = dataCadastro;
-            Endereco = endereco;
+            Senha = BC.HashPassword(senha, BC.GenerateSalt(10));
+            DataCadastro = DateTime.UtcNow;
         }
     }
 }

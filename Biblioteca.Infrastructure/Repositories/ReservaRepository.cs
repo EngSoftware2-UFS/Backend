@@ -23,7 +23,6 @@ namespace Biblioteca.Infrastructure.Repositories
         public async Task<List<Reserva>> GetAll()
         {
             return await _context.Set<Reserva>()
-                .Include(reserva => reserva.Exemplar)
                 .Include(reserva => reserva.Cliente)
                 .ToListAsync();
         }
@@ -31,7 +30,6 @@ namespace Biblioteca.Infrastructure.Repositories
         public async Task<Reserva?> GetById(ulong id)
         {
             return await _context.Set<Reserva>()
-                .Include(reserva => reserva.Exemplar)
                 .Include(reserva => reserva.Cliente)
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
@@ -45,9 +43,6 @@ namespace Biblioteca.Infrastructure.Repositories
         {
             return await _context.Set<Reserva>()
                 .AsNoTracking()
-                .Include(reserva => reserva.Exemplar)
-                .Include(reserva => reserva.Exemplar.Obra)
-                .Include(reserva => reserva.Exemplar.Obra.Editora)
                 .Where(e => e.ClienteId == idCliente)
                 .ToListAsync();
         }

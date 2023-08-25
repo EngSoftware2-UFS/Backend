@@ -1,5 +1,6 @@
 using Biblioteca.Services;
 using Biblioteca.Infrastructure;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +11,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddControllers().AddJsonOptions(x =>
+//   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
 // AutoMapper service
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("allcors", policy =>
+    {
+        policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 // Application services
 ServicesDI.AddServices(builder.Services);
@@ -26,7 +37,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("allcors");
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

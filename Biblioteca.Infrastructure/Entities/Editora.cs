@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Biblioteca.Domain.Entities;
+namespace Biblioteca.Infrastructure.scaffold;
 
 public partial class Editora
 {

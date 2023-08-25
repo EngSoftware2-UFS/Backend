@@ -9,8 +9,6 @@ namespace Biblioteca.Domain.Models.Responses
         public string CPF { get; private set; }
         public string Email { get; private set; }
         public DateTime DataCadastro { get; private set; }
-        public ulong EnderecoId { get; private set; }
-        public EnderecoResponse Endereco { get; private set; }
         public List<Emprestimo> HistoricoEmprestimos { get; private set; }
 
         public AtendenteResponse()

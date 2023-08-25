@@ -2,6 +2,7 @@
 using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
+using Biblioteca.Domain.Views;
 
 namespace Biblioteca.Services.Mappers
 {
@@ -22,6 +23,7 @@ namespace Biblioteca.Services.Mappers
             CreateMap<Endereco, EnderecoResponse>();
 
             CreateMap<Emprestimo, AtendenteEmprestimoResponse>();
+            CreateMap<ReservasView, HistoricoReservas>();
         }
     }
 }

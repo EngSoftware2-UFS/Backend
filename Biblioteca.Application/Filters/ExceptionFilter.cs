@@ -1,4 +1,5 @@
-﻿using Biblioteca.Application.Models.Responses;
+﻿using Biblioteca.Domain.Models.Responses;
+using Biblioteca.Domain.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Text.Json;

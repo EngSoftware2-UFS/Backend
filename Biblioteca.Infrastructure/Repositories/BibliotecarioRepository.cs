@@ -23,28 +23,24 @@ namespace Biblioteca.Infrastructure.Repositories
         public async Task<List<Bibliotecario>> GetAll()
         {
             return await _context.Set<Bibliotecario>()
-                .Include(bibliotecario => bibliotecario.Endereco)
                 .ToListAsync();
         }
 
         public async Task<Bibliotecario?> GetById(ulong id)
         {
             return await _context.Set<Bibliotecario>()
-                .Include(bibliotecario => bibliotecario.Endereco)
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<Bibliotecario?> GetByCpf(string cpf)
         {
             return await _context.Set<Bibliotecario>()
-                .Include(bibliotecario => bibliotecario.Endereco)
-                .Where(x => x.CPF == cpf).FirstOrDefaultAsync();
+                .Where(x => x.Cpf == cpf).FirstOrDefaultAsync();
         }
 
         public async Task<List<Bibliotecario>> GetByName(string name)
         {
             return await _context.Set<Bibliotecario>()
-                .Include(bibliotecario => bibliotecario.Endereco)
                 .Where(x => x.Nome.Contains(name)).ToListAsync();
         }
 

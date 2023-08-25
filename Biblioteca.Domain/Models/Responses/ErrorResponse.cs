@@ -1,4 +1,4 @@
-﻿namespace Biblioteca.Application.Models.Responses
+﻿namespace Biblioteca.Domain.Models.Responses
 {
     public class ErrorResponse
     {

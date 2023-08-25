@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Biblioteca.Domain.Entities;
+namespace Biblioteca.Infrastructure.scaffold;
 
 public partial class Endereco
 {
@@ -16,4 +16,6 @@ public partial class Endereco
     public string? Cidade { get; set; }
 
     public string? Complemento { get; set; }
+
+    public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
 }

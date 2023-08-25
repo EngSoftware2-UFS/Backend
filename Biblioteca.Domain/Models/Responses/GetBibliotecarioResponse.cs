@@ -9,24 +9,18 @@ namespace Biblioteca.Domain.Models.Responses
         public string CPF { get; private set; }
         public string Email { get; private set; }
         public DateTime DataCadastro { get; private set; }
-        public ulong EdenrecoId { get; private set; }
-        public virtual Endereco? Endereco { get; private set; }
 
         public GetBibliotecarioResponse(ulong id,
             string nome,
             string cpf,
             string email,
-            DateTime dataCadastro,
-            ulong edenrecoId,
-            Endereco? endereco)
+            DateTime dataCadastro)
         {
             Id = id;
             Nome = nome;
             CPF = cpf;
             Email = email;
             DataCadastro = dataCadastro;
-            EdenrecoId = edenrecoId;
-            Endereco = endereco;
         }
     }
 }

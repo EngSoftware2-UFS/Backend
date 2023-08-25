@@ -12,7 +12,7 @@ namespace Biblioteca.Domain.Interfaces
         Task<Cliente?> GetByCpf(string cpf);
         Task<List<Cliente>> GetByName(string name);
         Task<List<Reserva>> GetReservas(ulong idCliente);
-        Task<List<Reserva>> GetHistoricoReservas(ulong idCliente);
+        Task<List<HistoricoReservas>> GetHistoricoReservas(ulong idCliente);
         Task<Reserva?> GetReserva(ulong idCliente, ulong idReserva);
         Task<List<Emprestimo>> GetEmprestimos(ulong idCliente);
         Task<List<Emprestimo>> GetHistoricoEmprestimos(ulong idCliente);

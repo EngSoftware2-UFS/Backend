@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Biblioteca.Domain.Entities;
+namespace Biblioteca.Infrastructure.scaffold;
 
-public partial class Atendente
+public partial class Bibliotecario
 {
     public ulong Id { get; set; }
 
@@ -14,10 +13,9 @@ public partial class Atendente
 
     public string Email { get; set; } = null!;
 
-    [JsonIgnore]
     public string Senha { get; set; } = null!;
 
     public DateTime DataCadastro { get; set; }
 
-    public virtual ICollection<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>();
+    public virtual ICollection<Obra> Obras { get; set; } = new List<Obra>();
 }
