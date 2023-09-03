@@ -2,6 +2,7 @@ using Biblioteca.Application.Filters;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Biblioteca.Application.Controllers
@@ -9,6 +10,7 @@ namespace Biblioteca.Application.Controllers
     [ApiController]
     [Route("atendentes")]
     [TypeFilter(typeof(ExceptionFilter))]
+    [Authorize(Roles = "BIBLIOTECARIO")]
     public class AtendenteController : ControllerBase
     {
         private readonly IAtendenteService _atendenteService;

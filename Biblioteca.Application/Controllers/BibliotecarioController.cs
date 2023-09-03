@@ -3,13 +3,16 @@ using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Biblioteca.Application.Controllers
 {
     [ApiController]
     [Route("bibliotecarios")]
     [TypeFilter(typeof(ExceptionFilter))]
+    [Authorize(Roles = "BIBLIOTECARIO")]
     public class BibliotecarioController : ControllerBase
     {
         private readonly IBibliotecarioService _bibliotecarioService;
