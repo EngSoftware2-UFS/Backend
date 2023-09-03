@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Biblioteca.Domain.Entities
+namespace Biblioteca.Domain.Entities;
+
+public partial class Editora
 {
-    public class Editora
-    {
-        public ulong Id { get; set; }
-        public string Nome { get; set; }
-        public string Nacionalidade { get; set; }
-    }
+    public ulong Id { get; set; }
+
+    public string Nome { get; set; } = null!;
+
+    public string Nacionalidade { get; set; } = null!;
+
+    public virtual ICollection<Obra> Obras { get; set; } = new List<Obra>();
 }

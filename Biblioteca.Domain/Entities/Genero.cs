@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Biblioteca.Domain.Entities
+namespace Biblioteca.Domain.Entities;
+
+public partial class Genero
 {
-    public class Genero
-    {
-        public ulong Id { get; set; }
-        public string GeneroTextual { get; set; }
-        public string GeneroLiterario { get; set; }
-        public virtual ICollection<ObraGenero> ObraGeneros { get; set; }
+    public ulong Id { get; set; }
 
-    }
+    public string GeneroTextual { get; set; } = null!;
+
+    public string GeneroLiterario { get; set; } = null!;
+
+    public virtual ICollection<Obra> Obras { get; set; } = new List<Obra>();
 }

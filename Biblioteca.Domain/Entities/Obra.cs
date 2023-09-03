@@ -1,29 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Biblioteca.Domain.Entities
+namespace Biblioteca.Domain.Entities;
+
+public partial class Obra
 {
-    public class Obra
-    {
-        public ulong Id { get; set; }
+    public ulong Id { get; set; }
 
-        [Required]
-        public string Titulo { get; set; }
-        public string Idioma { get; set; }
-        public uint Ano { get; set; }
-        [Required]
-        public string ISBN { get; set; }
-        public string Edicao { get; set; }
-        
-        public ulong EditoraId { get; set; }
+    public string Titulo { get; set; } = null!;
 
-        public virtual Editora Editora { get; set; }
-        public virtual ICollection<ObraAutor> ObraAutores { get; set; }
-        public virtual ICollection<ObraGenero> ObraGeneros { get; set; }
+    public string Idioma { get; set; } = null!;
 
-    }
+    public uint Ano { get; set; }
+
+    public string Isbn { get; set; } = null!;
+
+    public string Edicao { get; set; } = null!;
+
+    public ulong EditoraId { get; set; }
+
+    public ulong BibliotecarioId { get; set; }
+
+    public virtual Bibliotecario Bibliotecario { get; set; } = null!;
+
+    public virtual Editora Editora { get; set; } = null!;
+
+    public virtual ICollection<Exemplare> Exemplares { get; set; } = new List<Exemplare>();
+
+    public virtual ICollection<Autore> Autors { get; set; } = new List<Autore>();
+
+    public virtual ICollection<Genero> Generos { get; set; } = new List<Genero>();
 }

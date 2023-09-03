@@ -23,430 +23,425 @@ namespace Biblioteca.Infrastructure.Migrations
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
-                    b.Property<string>("CPF")
+                    b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("CPF");
 
                     b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<ulong>("EdenrecoId")
-                        .HasColumnType("bigint unsigned");
+                        .HasMaxLength(6)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("dataCadastro");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<ulong>("EnderecoId")
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("longtext")
+                        .HasColumnName("email");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("nome");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("senha");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.HasIndex("EnderecoId");
-
-                    b.ToTable("Atendentes");
+                    b.ToTable("atendentes", (string)null);
                 });
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Autor", b =>
+            modelBuilder.Entity("Biblioteca.Domain.Entities.Autore", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("nome");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.ToTable("Autores");
+                    b.ToTable("autores", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Bibliotecario", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
-                    b.Property<string>("CPF")
+                    b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("CPF");
 
                     b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<ulong>("EdenrecoId")
-                        .HasColumnType("bigint unsigned");
+                        .HasMaxLength(6)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("dataCadastro");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<ulong>("EnderecoId")
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("longtext")
+                        .HasColumnName("email");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("nome");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("senha");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.HasIndex("EnderecoId");
-
-                    b.ToTable("Bibliotecarios");
+                    b.ToTable("bibliotecario", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Cliente", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
                     b.Property<bool>("Bloqueio")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("bloqueio");
 
-                    b.Property<string>("CPF")
+                    b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("CPF");
 
                     b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<ulong>("EdenrecoId")
-                        .HasColumnType("bigint unsigned");
+                        .HasMaxLength(6)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("dataCadastro");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("email");
 
-                    b.Property<ulong>("EnderecoId")
-                        .HasColumnType("bigint unsigned");
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int")
+                        .HasColumnName("enderecoId");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("nome");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("senha");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.HasIndex("EnderecoId");
+                    b.HasIndex(new[] { "EnderecoId" }, "fk_clientes_endereco1");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("clientes", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Editora", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
                     b.Property<string>("Nacionalidade")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("nacionalidade");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("nome");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.ToTable("Editoras");
+                    b.ToTable("editoras", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Emprestimo", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
                     b.Property<ulong>("AtendenteId")
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("atendenteId");
 
                     b.Property<ulong>("ClienteId")
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("clienteId");
 
                     b.Property<DateTime>("DataDevolucao")
-                        .HasColumnType("datetime(6)");
+                        .HasMaxLength(6)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("dataDevolucao");
 
                     b.Property<DateTime>("DataEmprestimo")
-                        .HasColumnType("datetime(6)");
+                        .HasMaxLength(6)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("dataEmprestimo");
 
-                    b.Property<ulong>("ExemplarId")
-                        .HasColumnType("bigint unsigned");
+                    b.Property<bool>("Inadimplencia")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("inadimplencia");
 
-                    b.Property<DateTime>("PrazoDevolução")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime>("PrazoDevolucao")
+                        .HasMaxLength(6)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("prazoDevolucao");
 
                     b.Property<int>("QuantidadeRenovacao")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("quantidadeRenovacao");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("status");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.HasIndex("AtendenteId");
+                    b.HasIndex(new[] { "AtendenteId" }, "FK_Emprestimos_Atendentes_AtendenteId");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex(new[] { "ClienteId" }, "FK_Emprestimos_Clientes_ClienteId");
 
-                    b.HasIndex("ExemplarId");
-
-                    b.ToTable("Emprestimos");
+                    b.ToTable("emprestimos", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Endereco", b =>
                 {
-                    b.Property<ulong>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("bairro");
 
                     b.Property<string>("Cidade")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("cidade");
 
                     b.Property<string>("Complemento")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("complemento");
 
                     b.Property<string>("Logradouro")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("logradouro");
 
                     b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
+                        .HasColumnName("numero");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.ToTable("Endereco");
+                    b.ToTable("endereco", (string)null);
                 });
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Exemplar", b =>
+            modelBuilder.Entity("Biblioteca.Domain.Entities.Exemplare", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<string>("Codigo")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
                     b.Property<bool>("Disponivel")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("disponivel");
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<ulong>("ObraId")
+                    b.Property<ulong?>("EmprestimoId")
                         .HasColumnType("bigint unsigned");
 
-                    b.HasKey("Id");
+                    b.Property<ulong>("ObraId")
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("obraId");
 
-                    b.HasIndex("ObraId");
+                    b.Property<ulong?>("ReservaId")
+                        .HasColumnType("bigint unsigned");
 
-                    b.ToTable("Exemplares");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
+
+                    b.HasIndex("EmprestimoId");
+
+                    b.HasIndex("ReservaId");
+
+                    b.HasIndex(new[] { "ObraId" }, "FK_Exemplares_Obras_ObraId");
+
+                    b.ToTable("exemplares", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Genero", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
                     b.Property<string>("GeneroLiterario")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("generoLiterario");
 
                     b.Property<string>("GeneroTextual")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("generoTextual");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.ToTable("Generos");
-                });
-
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Multa", b =>
-                {
-                    b.Property<ulong>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<ulong>("EmprestimoId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<bool>("Inadimplencia")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<double>("Valor")
-                        .HasColumnType("double");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmprestimoId");
-
-                    b.ToTable("Multas");
+                    b.ToTable("generos", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Obra", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
                     b.Property<uint>("Ano")
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("ano");
+
+                    b.Property<ulong>("BibliotecarioId")
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("bibliotecarioId");
 
                     b.Property<string>("Edicao")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("edicao");
 
                     b.Property<ulong>("EditoraId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("editoraId");
 
                     b.Property<string>("Idioma")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("idioma");
+
+                    b.Property<string>("Isbn")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("isbn");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("titulo");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.HasIndex("EditoraId");
+                    b.HasIndex(new[] { "BibliotecarioId" }, "fk_obras_administradores1");
 
-                    b.ToTable("Obras");
-                });
+                    b.HasIndex(new[] { "EditoraId" }, "fk_obras_editoras1");
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.ObraAutor", b =>
-                {
-                    b.Property<ulong>("ObraId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<ulong>("AutorId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.HasKey("ObraId", "AutorId");
-
-                    b.ToTable("ObrasAutores");
-                });
-
-            modelBuilder.Entity("Biblioteca.Domain.Entities.ObraGenero", b =>
-                {
-                    b.Property<ulong>("ObraId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<ulong>("GeneroId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<ulong>("Id")
-                        .HasColumnType("bigint unsigned");
-
-                    b.HasKey("ObraId", "GeneroId");
-
-                    b.HasIndex("GeneroId");
-
-                    b.ToTable("ObraGeneros");
+                    b.ToTable("obras", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Reserva", b =>
                 {
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("id");
 
                     b.Property<ulong>("ClienteId")
-                        .HasColumnType("bigint unsigned");
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("clienteId");
 
                     b.Property<DateTime>("DataReserva")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<ulong>("ExemplarId")
-                        .HasColumnType("bigint unsigned");
+                        .HasMaxLength(6)
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("dataReserva");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("status");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("PRIMARY");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex(new[] { "ClienteId" }, "FK_Reservas_Clientes_ClienteId");
 
-                    b.HasIndex("ExemplarId");
-
-                    b.ToTable("Reservas");
+                    b.ToTable("reservas", (string)null);
                 });
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Teste", b =>
+            modelBuilder.Entity("Obragenero", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<ulong>("ObraId")
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("obraId");
 
-                    b.Property<string>("Descriptino")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<ulong>("GeneroId")
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("generoId");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
+                    b.HasKey("ObraId", "GeneroId")
+                        .HasName("PRIMARY");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.HasIndex(new[] { "GeneroId" }, "FK_ObraGeneros_Generos_GeneroId");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Testes");
+                    b.ToTable("obrageneros", (string)null);
                 });
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Atendente", b =>
+            modelBuilder.Entity("Obrasautore", b =>
                 {
-                    b.HasOne("Biblioteca.Domain.Entities.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<ulong>("ObraId")
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("obraId");
 
-                    b.Navigation("Endereco");
-                });
+                    b.Property<ulong>("AutorId")
+                        .HasColumnType("bigint unsigned")
+                        .HasColumnName("autorId");
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Bibliotecario", b =>
-                {
-                    b.HasOne("Biblioteca.Domain.Entities.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasKey("ObraId", "AutorId")
+                        .HasName("PRIMARY");
 
-                    b.Navigation("Endereco");
+                    b.HasIndex(new[] { "AutorId" }, "FK_ObrasAutores_Autores_ObraId");
+
+                    b.ToTable("obrasautores", (string)null);
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Cliente", b =>
@@ -463,99 +458,61 @@ namespace Biblioteca.Infrastructure.Migrations
             modelBuilder.Entity("Biblioteca.Domain.Entities.Emprestimo", b =>
                 {
                     b.HasOne("Biblioteca.Domain.Entities.Atendente", "Atendente")
-                        .WithMany()
+                        .WithMany("Emprestimos")
                         .HasForeignKey("AtendenteId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Emprestimos_Atendentes_AtendenteId");
 
                     b.HasOne("Biblioteca.Domain.Entities.Cliente", "Cliente")
-                        .WithMany()
+                        .WithMany("Emprestimos")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Biblioteca.Domain.Entities.Exemplar", "Exemplar")
-                        .WithMany()
-                        .HasForeignKey("ExemplarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Emprestimos_Clientes_ClienteId");
 
                     b.Navigation("Atendente");
 
                     b.Navigation("Cliente");
-
-                    b.Navigation("Exemplar");
                 });
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Exemplar", b =>
+            modelBuilder.Entity("Biblioteca.Domain.Entities.Exemplare", b =>
                 {
+                    b.HasOne("Biblioteca.Domain.Entities.Emprestimo", null)
+                        .WithMany("Exemplars")
+                        .HasForeignKey("EmprestimoId");
+
                     b.HasOne("Biblioteca.Domain.Entities.Obra", "Obra")
-                        .WithMany()
+                        .WithMany("Exemplares")
                         .HasForeignKey("ObraId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Exemplares_Obras_ObraId");
+
+                    b.HasOne("Biblioteca.Domain.Entities.Reserva", null)
+                        .WithMany("Exemplars")
+                        .HasForeignKey("ReservaId");
 
                     b.Navigation("Obra");
-                });
-
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Multa", b =>
-                {
-                    b.HasOne("Biblioteca.Domain.Entities.Emprestimo", "Emprestimo")
-                        .WithMany()
-                        .HasForeignKey("EmprestimoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Emprestimo");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Obra", b =>
                 {
+                    b.HasOne("Biblioteca.Domain.Entities.Bibliotecario", "Bibliotecario")
+                        .WithMany("Obras")
+                        .HasForeignKey("BibliotecarioId")
+                        .IsRequired()
+                        .HasConstraintName("fk_obras_administradores1");
+
                     b.HasOne("Biblioteca.Domain.Entities.Editora", "Editora")
-                        .WithMany()
+                        .WithMany("Obras")
                         .HasForeignKey("EditoraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_obras_editoras1");
+
+                    b.Navigation("Bibliotecario");
 
                     b.Navigation("Editora");
-                });
-
-            modelBuilder.Entity("Biblioteca.Domain.Entities.ObraAutor", b =>
-                {
-                    b.HasOne("Biblioteca.Domain.Entities.Autor", "Autor")
-                        .WithMany("ObraAutores")
-                        .HasForeignKey("ObraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Biblioteca.Domain.Entities.Obra", "Obra")
-                        .WithMany("ObraAutores")
-                        .HasForeignKey("ObraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Autor");
-
-                    b.Navigation("Obra");
-                });
-
-            modelBuilder.Entity("Biblioteca.Domain.Entities.ObraGenero", b =>
-                {
-                    b.HasOne("Biblioteca.Domain.Entities.Genero", "Genero")
-                        .WithMany("ObraGeneros")
-                        .HasForeignKey("GeneroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Biblioteca.Domain.Entities.Obra", "Obra")
-                        .WithMany("ObraGeneros")
-                        .HasForeignKey("ObraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Genero");
-
-                    b.Navigation("Obra");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Reserva", b =>
@@ -564,44 +521,81 @@ namespace Biblioteca.Infrastructure.Migrations
                         .WithMany("Reservas")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Biblioteca.Domain.Entities.Exemplar", "Exemplar")
-                        .WithMany("Reservas")
-                        .HasForeignKey("ExemplarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Reservas_Clientes_ClienteId");
 
                     b.Navigation("Cliente");
-
-                    b.Navigation("Exemplar");
                 });
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Autor", b =>
+            modelBuilder.Entity("Obragenero", b =>
                 {
-                    b.Navigation("ObraAutores");
+                    b.HasOne("Biblioteca.Domain.Entities.Genero", null)
+                        .WithMany()
+                        .HasForeignKey("GeneroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ObraGeneros_Generos_GeneroId");
+
+                    b.HasOne("Biblioteca.Domain.Entities.Obra", null)
+                        .WithMany()
+                        .HasForeignKey("ObraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ObraGeneros_Obras_ObraId");
+                });
+
+            modelBuilder.Entity("Obrasautore", b =>
+                {
+                    b.HasOne("Biblioteca.Domain.Entities.Autore", null)
+                        .WithMany()
+                        .HasForeignKey("AutorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ObrasAutores_Autores_ObraId");
+
+                    b.HasOne("Biblioteca.Domain.Entities.Obra", null)
+                        .WithMany()
+                        .HasForeignKey("ObraId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ObrasAutores_Obras_ObraId");
+                });
+
+            modelBuilder.Entity("Biblioteca.Domain.Entities.Atendente", b =>
+                {
+                    b.Navigation("Emprestimos");
+                });
+
+            modelBuilder.Entity("Biblioteca.Domain.Entities.Bibliotecario", b =>
+                {
+                    b.Navigation("Obras");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Cliente", b =>
                 {
+                    b.Navigation("Emprestimos");
+
                     b.Navigation("Reservas");
                 });
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Exemplar", b =>
+            modelBuilder.Entity("Biblioteca.Domain.Entities.Editora", b =>
                 {
-                    b.Navigation("Reservas");
+                    b.Navigation("Obras");
                 });
 
-            modelBuilder.Entity("Biblioteca.Domain.Entities.Genero", b =>
+            modelBuilder.Entity("Biblioteca.Domain.Entities.Emprestimo", b =>
                 {
-                    b.Navigation("ObraGeneros");
+                    b.Navigation("Exemplars");
                 });
 
             modelBuilder.Entity("Biblioteca.Domain.Entities.Obra", b =>
                 {
-                    b.Navigation("ObraAutores");
+                    b.Navigation("Exemplares");
+                });
 
-                    b.Navigation("ObraGeneros");
+            modelBuilder.Entity("Biblioteca.Domain.Entities.Reserva", b =>
+                {
+                    b.Navigation("Exemplars");
                 });
 #pragma warning restore 612, 618
         }

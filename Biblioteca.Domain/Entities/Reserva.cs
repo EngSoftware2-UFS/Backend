@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Biblioteca.Domain.Entities
+namespace Biblioteca.Domain.Entities;
+
+public partial class Reserva
 {
-    public class Reserva
-    {
-        public ulong Id { get; set; }
-        public DateTime DataReserva { get; set; }
-        public string Status { get; set; }
+    public ulong Id { get; set; }
 
-        public ulong ClienteId { get; set; }
-        public virtual Cliente Cliente { get; set; }
+    public DateTime DataReserva { get; set; }
 
-        public ulong ExemplarId { get; set; }
-        public virtual Exemplar Exemplar { get; set; }
-    }
+    public string Status { get; set; } = null!;
+
+    public ulong ClienteId { get; set; }
+
+    public virtual Cliente Cliente { get; set; } = null!;
+
+    public virtual ICollection<Exemplare> Exemplars { get; set; } = new List<Exemplare>();
 }
