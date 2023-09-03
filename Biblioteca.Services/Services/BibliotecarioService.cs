@@ -3,8 +3,6 @@ using Biblioteca.Domain.Interfaces;
 using Biblioteca.Infrastructure.Repositories.Interfaces;
 using AutoMapper;
 using Biblioteca.Domain.Models.Requests;
-using Biblioteca.Domain.Models.Responses;
-using System.Collections.Generic;
 
 namespace Biblioteca.Services
 {
