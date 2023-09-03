@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain.Interfaces;
+using Biblioteca.Services.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Biblioteca.Services
@@ -7,6 +8,7 @@ namespace Biblioteca.Services
     {
         public static void AddServices(IServiceCollection services)
         {
+            services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<IAtendenteService, AtendenteService>();
             services.AddScoped<IBibliotecarioService, BibliotecarioService>();
             services.AddScoped<IClienteService, ClienteService>();
