@@ -154,13 +154,13 @@ public partial class InfraDbContext : DbContext
             entity.Property(e => e.QuantidadeRenovacao).HasColumnName("quantidadeRenovacao");
             entity.Property(e => e.Status).HasColumnName("status");
 
-            entity.HasOne(d => d.Atendente).WithMany(p => p.Emprestimos)
-                .HasForeignKey(d => d.AtendenteId)
-                .HasConstraintName("FK_Emprestimos_Atendentes_AtendenteId");
+            //entity.HasOne(d => d.Atendente).WithMany(p => p.Emprestimos)
+            //    .HasForeignKey(d => d.AtendenteId)
+            //    .HasConstraintName("FK_Emprestimos_Atendentes_AtendenteId");
 
-            entity.HasOne(d => d.Cliente).WithMany(p => p.Emprestimos)
-                .HasForeignKey(d => d.ClienteId)
-                .HasConstraintName("FK_Emprestimos_Clientes_ClienteId");
+            //entity.HasOne(d => d.Cliente).WithMany(p => p.Emprestimos)
+            //    .HasForeignKey(d => d.ClienteId)
+            //    .HasConstraintName("FK_Emprestimos_Clientes_ClienteId");
 
             //entity.HasMany(d => d.Exemplars).WithMany(p => p.Emprestimos)
             //    .UsingEntity<Dictionary<string, object>>(
@@ -312,9 +312,9 @@ public partial class InfraDbContext : DbContext
                 .HasColumnName("dataReserva");
             entity.Property(e => e.Status).HasColumnName("status");
 
-            entity.HasOne(d => d.Cliente).WithMany(p => p.Reservas)
-                .HasForeignKey(d => d.ClienteId)
-                .HasConstraintName("FK_Reservas_Clientes_ClienteId");
+            //entity.HasOne(d => d.Cliente).WithMany(p => p.Reservas)
+            //    .HasForeignKey(d => d.ClienteId)
+            //    .HasConstraintName("FK_Reservas_Clientes_ClienteId");
 
             //entity.HasMany(d => d.Exemplars).WithMany(p => p.Reservas)
             //    .UsingEntity<Dictionary<string, object>>(
