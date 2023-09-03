@@ -44,6 +44,12 @@ namespace Biblioteca.Infrastructure.Repositories
                 .Where(x => x.Nome.Contains(name)).ToListAsync();
         }
 
+        public async Task<Atendente?> GetByEmail(string email)
+        {
+            return await _context.Set<Atendente>()
+                .FirstOrDefaultAsync(x => x.Email == email);
+        }
+
         public void Update(Atendente entity)
         {
             _context.Set<Atendente>().Update(entity);

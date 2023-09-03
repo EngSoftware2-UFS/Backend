@@ -9,6 +9,7 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
         Task<Atendente?> GetById(ulong id);
         Task<Atendente?> GetByCpf(string cpf);
         Task<List<Atendente>> GetByName(string name);
+        Task<Atendente?> GetByEmail(string email);
         void Update(Atendente entity);
         Task Delete(ulong id);
     }
