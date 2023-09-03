@@ -33,7 +33,6 @@ namespace Biblioteca.Infrastructure.Repositories
         {
             return await _context.Set<Cliente>()
                 .Include(cliente => cliente.Endereco)
-                .Include(cliente => cliente.Reservas)
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
@@ -49,6 +48,12 @@ namespace Biblioteca.Infrastructure.Repositories
             return await _context.Set<Cliente>()
                 .Include(cliente => cliente.Endereco)
                 .Where(x => x.Nome.Contains(name)).ToListAsync();
+        }
+
+        public async Task<Cliente?> GetByEmail(string email)
+        {
+            return await _context.Set<Cliente>()
+                .FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public async Task<List<ReservasView>> GetReservas(ulong clientId)
