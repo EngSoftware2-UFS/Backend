@@ -56,21 +56,6 @@ namespace Biblioteca.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Email == email);
         }
 
-        public async Task<List<ReservasView>> GetReservas(ulong clientId)
-        {
-            //FormattableString query = $@"SELECT r.id, r.dataReserva, r.status, o.titulo, a.nome
-            //                            FROM reservaExemplar re 
-            //                            JOIN reservas r ON (re.reservaId = r.id) 
-            //                            JOIN exemplares e ON (re.exemplarId = e.id) 
-            //                            JOIN obras o ON (o.id = e.obraId)
-            //                            JOIN obrasautores oa ON (o.id = oa.obraId) 
-            //                            JOIN autores a ON (a.id = oa.autorId)
-            //                            WHERE r.clienteId = {clientId} AND r.id = 2";
-
-            //var result = _context.Database.SqlQuery<HistoricoReservas2>(query);
-            return await _context.ReservasView.Where(e => e.ClienteId == clientId).ToListAsync();
-        }
-
         public void Update(Cliente entity)
         {
             _context.Set<Cliente>().Update(entity);

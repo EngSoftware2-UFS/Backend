@@ -7,6 +7,8 @@ using Biblioteca.Domain.Models.Responses;
 using System.Collections.Generic;
 using Biblioteca.Domain.Enums;
 using Biblioteca.Domain.Views;
+using System.Linq.Expressions;
+using Microsoft.AspNetCore.Http;
 
 namespace Biblioteca.Services
 {
@@ -14,14 +16,17 @@ namespace Biblioteca.Services
     {
         private readonly IClienteRepository _clienteRepository;
         private readonly IReservaRepository _reservaRepository;
+        private readonly IEmprestimoRepository _emprestimoRepository;
         private readonly IMapper _autoMapper;
 
         public ClienteService(IClienteRepository clienteRepository,
             IReservaRepository reservaRepository,
+            IEmprestimoRepository emprestimoRepository,
             IMapper autoMapper)
         {
             _clienteRepository = clienteRepository;
             _reservaRepository = reservaRepository;
+            _emprestimoRepository = emprestimoRepository;
             _autoMapper = autoMapper;
         }
 
@@ -67,129 +72,159 @@ namespace Biblioteca.Services
         }
 
 
-        public async Task<List<Reserva>> GetReservas(ulong idCliente)
+        public async Task<List<ReservaResponse>> GetReservas(ulong idCliente)
         {
-            Cliente? result = await _clienteRepository.GetById(idCliente);
-            if (result == null)
+            List<ReservasView>? results = await _reservaRepository.GetByClientId(idCliente);
+            var filteredResults = results?.Where(r => r.Status == EStatusReserva.ATIVA.ToString()).ToList();
+            if (filteredResults == null)
                 throw new KeyNotFoundException("Not Found.");
 
-            List<Reserva> reservas = await _reservaRepository.GetByClientId(idCliente);
-
-            return reservas.Where(e => e.Status == EStatusReserva.ATIVA.ToString()).ToList();
-        }
-
-        public async Task<List<HistoricoReservas>> GetHistoricoReservas(ulong idCliente)
-        {
-            List<ReservasView>? result = await _clienteRepository.GetReservas(idCliente);
-            if (result == null)
-                throw new KeyNotFoundException("Not Found.");
-
-            return _autoMapper.Map<List<HistoricoReservas>>(result);
-        }
-
-        public async Task<List<Reserva>> GetHistoricoReservas2(ulong idCliente)
-        {
-            Cliente? result = await _clienteRepository.GetById(idCliente);
-            if (result == null)
-                throw new KeyNotFoundException("Not Found.");
-
-            List<Reserva> reservas = await _reservaRepository.GetByClientId(idCliente);
+            var reservas = new List<ReservaResponse>();
+            filteredResults.ForEach(result =>
+            {
+                var reserva = reservas.Find(e => e.Id == result.Id);
+                if (reserva == null)
+                {
+                    reservas.Add(new ReservaResponse(result));
+                }
+                else
+                {
+                    reserva.addObra(result.Titulo);
+                }
+            });
 
             return reservas;
         }
 
-        public async Task<Reserva?> GetReserva(ulong idCliente, ulong idReserva)
+        public async Task<List<ReservaResponse>> GetHistoricoReservas(ulong idCliente)
         {
-            Cliente? result = await _clienteRepository.GetById(idCliente);
+            List<ReservasView>? results = await _reservaRepository.GetByClientId(idCliente);
+            if (results == null)
+                throw new KeyNotFoundException("Not Found.");
+
+            var reservas = new List<ReservaResponse>();
+            results.ForEach(result =>
+            {
+                var reserva = reservas.Find(e => e.Id == result.Id);
+                if (reserva == null)
+                {
+                    reservas.Add(new ReservaResponse(result));
+                }
+                else
+                {
+                    reserva.addObra(result.Titulo);
+                }
+            });
+
+            return reservas;
+        }
+
+        public async Task<ReservaResponse?> GetReserva(ulong idCliente, ulong idReserva)
+        {
+            List<ReservasView>? results = await _reservaRepository.GetByClientId(idCliente);
+            var result = results?.Find(r => r.Id == idReserva);
             if (result == null)
                 throw new KeyNotFoundException("Not Found.");
 
-            List<Reserva> reservas = await _reservaRepository.GetByClientId(idCliente);
+            var allResults = results.Where(r => r.Id == idReserva).ToList();
+            if (allResults.Count > 1)
+            {
+                ReservaResponse? reserva = null;
+                allResults.ForEach(singleResult =>
+                {
+                    if (reserva == null)
+                    {
+                        reserva = new ReservaResponse(singleResult);
+                    }
+                    else
+                    {
+                        reserva.addObra(singleResult.Titulo);
+                    }
+                });
 
-            return reservas.Find(e => e.Id == idReserva);
+                return reserva;
+            }
+            else
+            {
+                return _autoMapper.Map<ReservaResponse?>(result);
+            }
         }
 
-        public async Task<List<Emprestimo>> GetEmprestimos(ulong idCliente)
+        public async Task<List<EmprestimoResponse>> GetEmprestimos(ulong idCliente)
         {
-            throw new NotImplementedException();
-            //Cliente? result = await _clienteRepository.GetById(idCliente);
-            //if (result == null)
-            //    throw new KeyNotFoundException("Not Found.");
+            List<EmprestimosView>? results = await _emprestimoRepository.GetByClientId(idCliente);
+            var filteredResults = results.Where(e => e.Status == EStatusEmprestimo.ATIVO.ToString()).ToList();
+            if (filteredResults == null)
+                throw new KeyNotFoundException("Not Found.");
 
-            //return result.HistoricoEmprestimos.Select(x => new Emprestimo
-            //{
-            //    Id = x.Id,
-            //    DataDevolucao = x.DataDevolucao,
-            //    DataEmprestimo = x.DataEmprestimo,
-            //    PrazoDevolucao = x.PrazoDevolucao,
-            //    QuantidadeRenovacao = x.QuantidadeRenovacao,
-            //    Status = x.Status,
-            //    Exemplar = x.Exemplar,
-            //    ExemplarId = x.ExemplarId,
-            //    Atendente = x.Atendente.NoHistory(),
-            //    AtendenteId = x.AtendenteId,
-            //    Multas = x.Multas.Select(e => new Multa()
-            //    {
-            //        Id = e.Id,
-            //        Inadimplencia = e.Inadimplencia,
-            //        Valor = e.Valor
-            //    }).ToList()
-            //}).Where(e => e.Status == EStatusReserva.ATIVA.ToString()).ToList();
+            var emprestimos = new List<EmprestimoResponse>();
+            filteredResults.ForEach(result =>
+            {
+                var emprestimo = emprestimos.Find(e => e.Id == result.Id);
+                if (emprestimo == null)
+                {
+                    emprestimos.Add(new EmprestimoResponse(result));
+                }
+                else
+                {
+                    emprestimo.addObra(result.Titulo);
+                }
+            });
+
+            return emprestimos;
         }
 
-        public async Task<List<Emprestimo>> GetHistoricoEmprestimos(ulong idCliente)
+        public async Task<List<EmprestimoResponse>> GetHistoricoEmprestimos(ulong idCliente)
         {
-            throw new NotImplementedException();
-            //Cliente? result = await _clienteRepository.GetById(idCliente);
-            //if (result == null)
-            //    throw new KeyNotFoundException("Not Found.");
+            List<EmprestimosView>? results = await _emprestimoRepository.GetByClientId(idCliente);
+            if (results == null)
+                throw new KeyNotFoundException("Not Found.");
 
-            //return result.HistoricoEmprestimos.Select(x => new Emprestimo
-            //{
-            //    Id = x.Id,
-            //    DataDevolucao = x.DataDevolucao,
-            //    DataEmprestimo = x.DataEmprestimo,
-            //    PrazoDevolucao = x.PrazoDevolucao,
-            //    QuantidadeRenovacao = x.QuantidadeRenovacao,
-            //    Status = x.Status,
-            //    Exemplar = x.Exemplar,
-            //    ExemplarId = x.ExemplarId,
-            //    Atendente = x.Atendente.NoHistory(),
-            //    AtendenteId = x.AtendenteId,
-            //    Multas = x.Multas.Select(e => new Multa()
-            //    {
-            //        Id = e.Id,
-            //        Inadimplencia = e.Inadimplencia,
-            //        Valor = e.Valor
-            //    }).ToList()
-            //}).ToList();
+            var emprestimos = new List<EmprestimoResponse>();
+            results.ForEach(result =>
+            {
+                var emprestimo = emprestimos.Find(e => e.Id == result.Id);
+                if (emprestimo == null)
+                {
+                    emprestimos.Add(new EmprestimoResponse(result));
+                }
+                else
+                {
+                    emprestimo.addObra(result.Titulo);
+                }
+            });
+
+            return emprestimos;
         }
-        public async Task<Emprestimo?> GetEmprestimo(ulong idCliente, ulong idEmprestimo)
+        public async Task<EmprestimoResponse?> GetEmprestimo(ulong idCliente, ulong idEmprestimo)
         {
-            throw new NotImplementedException();
-            //Cliente? result = await _clienteRepository.GetById(idCliente);
-            //if (result == null)
-            //    throw new KeyNotFoundException("Not Found.");
+            List<EmprestimosView>? results = await _emprestimoRepository.GetByClientId(idCliente);
+            var result = results?.Find(e => e.Id == idEmprestimo);
+            if (result == null)
+                throw new KeyNotFoundException("Not Found.");
 
-            //return result.HistoricoEmprestimos.Select(x => new Emprestimo
-            //{
-            //    Id = x.Id,
-            //    DataDevolucao = x.DataDevolucao,
-            //    DataEmprestimo = x.DataEmprestimo,
-            //    PrazoDevolucao = x.PrazoDevolucao,
-            //    QuantidadeRenovacao = x.QuantidadeRenovacao,
-            //    Status = x.Status,
-            //    Exemplar = x.Exemplar,
-            //    ExemplarId = x.ExemplarId,
-            //    Atendente = x.Atendente.NoHistory(),
-            //    AtendenteId = x.AtendenteId,
-            //    Multas = x.Multas.Select(e => new Multa()
-            //    {
-            //        Id = e.Id,
-            //        Inadimplencia = e.Inadimplencia,
-            //        Valor = e.Valor
-            //    }).ToList()
-            //}).FirstOrDefault(e => e.Id == idEmprestimo);
+            var allResults = results.Where(e => e.Id == idEmprestimo).ToList();
+            if (allResults.Count > 1)
+            {
+                EmprestimoResponse? emprestimo = null;
+                allResults.ForEach(singleResult =>
+                {
+                    if (emprestimo == null)
+                    {
+                        emprestimo = new EmprestimoResponse(singleResult);
+                    }
+                    else
+                    {
+                        emprestimo.addObra(singleResult.Titulo);
+                    }
+                });
+
+                return emprestimo;
+            }
+            else
+            {
+                return _autoMapper.Map<EmprestimoResponse?>(result);
+            }
         }
 
         public void Update(AddClienteRequest request)

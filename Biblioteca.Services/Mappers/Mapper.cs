@@ -24,8 +24,12 @@ namespace Biblioteca.Services.Mappers
             CreateMap<AddEnderecoRequest, Endereco>();
             CreateMap<Endereco, EnderecoResponse>();
 
-            CreateMap<Emprestimo, AtendenteEmprestimoResponse>();
-            CreateMap<ReservasView, HistoricoReservas>();
+            CreateMap<EmprestimosView, EmprestimoResponse>()
+                .ConstructUsing(emprestimoView =>
+                    new EmprestimoResponse(emprestimoView));
+            CreateMap<ReservasView, ReservaResponse>()
+                .ConstructUsing(reservaView => 
+                    new ReservaResponse(reservaView));
 
             CreateMap<Atendente, UserData>()
                 .ConstructUsing(atendente => 

@@ -43,17 +43,13 @@ public partial class InfraDbContext : DbContext
 
     public virtual DbSet<ReservasView> ReservasView { get; set; }
 
+    public virtual DbSet<EmprestimosView> EmprestimosView { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ReservasView>(builder =>
-        {
-            builder.ToView("ReservasView");
-            builder.HasNoKey();
-            builder.Property(p => p.Id).HasColumnName("id");
-            builder.Property(p => p.DataReserva).HasColumnName("dataReserva");
-            builder.Property(p => p.Status).HasColumnName("status");
-            builder.Property(p => p.Titulo).HasColumnName("titulo");
-        });
+        modelBuilder.Entity<EmprestimosView>().HasNoKey();
+
+        modelBuilder.Entity<ReservasView>().HasNoKey();
 
         modelBuilder.Entity<Atendente>(entity =>
         {

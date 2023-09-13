@@ -77,7 +77,7 @@ namespace Biblioteca.Application.Controllers
                 && loggedUser.Id != idCliente)
                 return NotFound();
 
-            List<Reserva> results = await _clienteService.GetReservas(idCliente);
+            List<ReservaResponse> results = await _clienteService.GetReservas(idCliente);
             return Ok(results);
         }
 
@@ -91,7 +91,7 @@ namespace Biblioteca.Application.Controllers
                 && loggedUser.Id != idCliente)
                 return NotFound();
 
-            List<HistoricoReservas> results = await _clienteService.GetHistoricoReservas(idCliente);
+            List<ReservaResponse> results = await _clienteService.GetHistoricoReservas(idCliente);
             return Ok(results);
         }
 
@@ -105,7 +105,7 @@ namespace Biblioteca.Application.Controllers
                 && loggedUser.Id != idCliente)
                 return NotFound();
 
-            Reserva? results = await _clienteService.GetReserva(idCliente, idReserva);
+            ReservaResponse? results = await _clienteService.GetReserva(idCliente, idReserva);
             return Ok(results);
         }
 
@@ -119,7 +119,7 @@ namespace Biblioteca.Application.Controllers
                 && loggedUser.Id != idCliente)
                 return NotFound();
 
-            List<Emprestimo> results = await _clienteService.GetEmprestimos(idCliente);
+            List<EmprestimoResponse> results = await _clienteService.GetEmprestimos(idCliente);
             return Ok(results);
         }
 
@@ -133,7 +133,7 @@ namespace Biblioteca.Application.Controllers
                 && loggedUser.Id != idCliente)
                 return NotFound();
 
-            List<Emprestimo> results = await _clienteService.GetHistoricoEmprestimos(idCliente);
+            List<EmprestimoResponse> results = await _clienteService.GetHistoricoEmprestimos(idCliente);
             return Ok(results);
         }
 
@@ -147,7 +147,7 @@ namespace Biblioteca.Application.Controllers
                 && loggedUser.Id != idCliente)
                 return NotFound();
 
-            Emprestimo? results = await _clienteService.GetEmprestimo(idCliente, idEmprestimo);
+            EmprestimoResponse? results = await _clienteService.GetEmprestimo(idCliente, idEmprestimo);
             return Ok(results);
         }
     }
