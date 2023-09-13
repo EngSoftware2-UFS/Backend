@@ -2,6 +2,7 @@
 using Biblioteca.Infrastructure.Repositories.Interfaces;
 using Biblioteca.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Biblioteca.Domain.Views;
 
 namespace Biblioteca.Infrastructure.Repositories
 {
@@ -39,12 +40,14 @@ namespace Biblioteca.Infrastructure.Repositories
             _context.Set<Reserva>().Update(entity);
         }
 
-        public async Task<List<Reserva>> GetByClientId(ulong idCliente)
+        public async Task<List<ReservasView>> GetByClientId(ulong idCliente)
         {
-            return await _context.Set<Reserva>()
-                .AsNoTracking()
-                .Where(e => e.ClienteId == idCliente)
-                .ToListAsync();
+            return await _context.ReservasView.FromSqlRaw($@"SELECT r.id, r.dataReserva, r.status, o.titulo, r.clienteId
+                                                    FROM reservaExemplar re
+                                                    JOIN reservas r ON (re.reservaId = r.id)
+                                                    JOIN exemplares e ON (re.exemplarId = e.id)
+                                                    JOIN obras o ON (o.id = e.obraId)
+                                                    WHERE r.clienteId = {idCliente}").ToListAsync();
         }
 
         public async Task Delete(ulong id)
