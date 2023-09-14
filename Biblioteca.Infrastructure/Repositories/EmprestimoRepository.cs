@@ -42,7 +42,7 @@ namespace Biblioteca.Infrastructure.Repositories
 
         public async Task<List<EmprestimosView>> GetByClientId(ulong idCliente)
         {
-            return await _context.EmprestimosView.FromSqlRaw($@"SELECT e.id, e.dataEmprestimo, e.dataDevolucao, e.prazoDevolucao, e.quantidadeRenovacao, e.inadimplencia, e.status, o.titulo, e.clienteId
+            return await _context.EmprestimosView.FromSqlRaw($@"SELECT e.id, e.dataEmprestimo, e.dataDevolucao, e.prazoDevolucao, e.quantidadeRenovacao, e.inadimplencia, e.status, o.Id as obraId, o.titulo, e.clienteId
                                                     FROM emprestimoExemplar ee
                                                     JOIN emprestimos e ON (ee.emprestimoId = e.id)
                                                     JOIN exemplares ex ON (ex.id = ee.exemplarId)

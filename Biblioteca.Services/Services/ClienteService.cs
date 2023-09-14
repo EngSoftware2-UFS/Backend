@@ -89,7 +89,7 @@ namespace Biblioteca.Services
                 }
                 else
                 {
-                    reserva.addObra(result.Titulo);
+                    reserva.addObra(result.ObraId, result.Titulo);
                 }
             });
 
@@ -112,7 +112,7 @@ namespace Biblioteca.Services
                 }
                 else
                 {
-                    reserva.addObra(result.Titulo);
+                    reserva.addObra(result.ObraId, result.Titulo);
                 }
             });
 
@@ -123,7 +123,7 @@ namespace Biblioteca.Services
         {
             List<ReservasView>? results = await _reservaRepository.GetByClientId(idCliente);
             var result = results?.Find(r => r.Id == idReserva);
-            if (result == null)
+            if (results == null || result == null)
                 throw new KeyNotFoundException("Not Found.");
 
             var allResults = results.Where(r => r.Id == idReserva).ToList();
@@ -138,7 +138,7 @@ namespace Biblioteca.Services
                     }
                     else
                     {
-                        reserva.addObra(singleResult.Titulo);
+                        reserva.addObra(singleResult.ObraId, singleResult.Titulo);
                     }
                 });
 
@@ -167,7 +167,7 @@ namespace Biblioteca.Services
                 }
                 else
                 {
-                    emprestimo.addObra(result.Titulo);
+                    emprestimo.addObra(result.ObraId, result.Titulo);
                 }
             });
 
@@ -190,7 +190,7 @@ namespace Biblioteca.Services
                 }
                 else
                 {
-                    emprestimo.addObra(result.Titulo);
+                    emprestimo.addObra(result.ObraId, result.Titulo);
                 }
             });
 
@@ -200,7 +200,7 @@ namespace Biblioteca.Services
         {
             List<EmprestimosView>? results = await _emprestimoRepository.GetByClientId(idCliente);
             var result = results?.Find(e => e.Id == idEmprestimo);
-            if (result == null)
+            if (results == null || result == null)
                 throw new KeyNotFoundException("Not Found.");
 
             var allResults = results.Where(e => e.Id == idEmprestimo).ToList();
@@ -215,7 +215,7 @@ namespace Biblioteca.Services
                     }
                     else
                     {
-                        emprestimo.addObra(singleResult.Titulo);
+                        emprestimo.addObra(singleResult.ObraId, singleResult.Titulo);
                     }
                 });
 
