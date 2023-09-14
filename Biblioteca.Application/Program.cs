@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,8 +47,13 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 
-//builder.Services.AddControllers().AddJsonOptions(x =>
-//   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+builder.Services.AddControllers().AddJsonOptions(x =>
+{
+    //x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve; // Prevent object cycles from include ef, but the object will be ugly
+    x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    x.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+    x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 
 // AutoMapper service
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
