@@ -7,7 +7,8 @@ namespace Biblioteca.Domain.Models.Responses
         public ulong Id { get; private set; }
         public DateTime DataReserva { get; private set; }
         public string Status { get; private set; } = "";
-        public List<string> Obras { get; private set; } = new List<string>();
+        public List<ObraShortResponse> Obras { get; private set; } = new List<ObraShortResponse>();
+        public ulong? ClienteId { get; private set; } = null;
 
         public ReservaResponse() { }
 
@@ -23,12 +24,17 @@ namespace Biblioteca.Domain.Models.Responses
             Id = reservaView.Id;
             DataReserva = reservaView.DataReserva;
             Status = reservaView.Status;
-            addObra(reservaView.Titulo);
+            addObra(reservaView.ObraId, reservaView.Titulo);
         }
 
-        public void addObra(string titulo)
+        public void addObra(ulong obraId, string titulo)
         {
-            Obras.Add(titulo);
+            Obras.Add(new ObraShortResponse(obraId, titulo));
+        }
+
+        public void setClienteId(ulong clienteId)
+        {
+            ClienteId = clienteId;
         }
     }
 }
