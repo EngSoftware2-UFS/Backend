@@ -34,9 +34,7 @@ public partial class InfraDbContext : DbContext
     public virtual DbSet<Endereco> Enderecos { get; set; }
 
     public virtual DbSet<Exemplare> Exemplares { get; set; }
-
     public virtual DbSet<Genero> Generos { get; set; }
-
     public virtual DbSet<Obra> Obras { get; set; }
 
     public virtual DbSet<Reserva> Reservas { get; set; }
@@ -121,6 +119,16 @@ public partial class InfraDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nacionalidade).HasColumnName("nacionalidade");
+            entity.Property(e => e.Nome).HasColumnName("nome");
+        });
+
+        modelBuilder.Entity<Genero>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("generos");
+
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nome).HasColumnName("nome");
         });
 
@@ -216,16 +224,6 @@ public partial class InfraDbContext : DbContext
                 .HasConstraintName("FK_Exemplares_Obras_ObraId");
         });
 
-        modelBuilder.Entity<Genero>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("generos");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.GeneroLiterario).HasColumnName("generoLiterario");
-            entity.Property(e => e.GeneroTextual).HasColumnName("generoTextual");
-        });
 
         modelBuilder.Entity<Obra>(entity =>
         {
@@ -242,6 +240,7 @@ public partial class InfraDbContext : DbContext
             entity.Property(e => e.BibliotecarioId).HasColumnName("bibliotecarioId");
             entity.Property(e => e.Edicao).HasColumnName("edicao");
             entity.Property(e => e.EditoraId).HasColumnName("editoraId");
+            entity.Property(e => e.GeneroId).HasColumnName("generoId");
             entity.Property(e => e.Idioma).HasColumnName("idioma");
             entity.Property(e => e.Isbn).HasColumnName("isbn");
             entity.Property(e => e.Titulo).HasColumnName("titulo");
@@ -255,6 +254,11 @@ public partial class InfraDbContext : DbContext
                 .HasForeignKey(d => d.EditoraId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_obras_editoras1");
+
+            entity.HasOne(d => d.Genero).WithMany(p => p.Obras)
+                .HasForeignKey(d => d.GeneroId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_obras_generos");
 
             entity.HasMany(d => d.Autors).WithMany(p => p.Obras)
                 .UsingEntity<Dictionary<string, object>>(
@@ -272,24 +276,6 @@ public partial class InfraDbContext : DbContext
                         j.HasIndex(new[] { "AutorId" }, "FK_ObrasAutores_Autores_ObraId");
                         j.IndexerProperty<ulong>("ObraId").HasColumnName("obraId");
                         j.IndexerProperty<ulong>("AutorId").HasColumnName("autorId");
-                    });
-
-            entity.HasMany(d => d.Generos).WithMany(p => p.Obras)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Obragenero",
-                    r => r.HasOne<Genero>().WithMany()
-                        .HasForeignKey("GeneroId")
-                        .HasConstraintName("FK_ObraGeneros_Generos_GeneroId"),
-                    l => l.HasOne<Obra>().WithMany()
-                        .HasForeignKey("ObraId")
-                        .HasConstraintName("FK_ObraGeneros_Obras_ObraId"),
-                    j =>
-                    {
-                        j.HasKey("ObraId", "GeneroId").HasName("PRIMARY");
-                        j.ToTable("obrageneros");
-                        j.HasIndex(new[] { "GeneroId" }, "FK_ObraGeneros_Generos_GeneroId");
-                        j.IndexerProperty<ulong>("ObraId").HasColumnName("obraId");
-                        j.IndexerProperty<ulong>("GeneroId").HasColumnName("generoId");
                     });
         });
 

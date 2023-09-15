@@ -42,6 +42,9 @@ namespace Biblioteca.Services.Mappers
             CreateMap<Bibliotecario, UserData>()
                 .ConstructUsing(bibliotecario =>
                     new UserData(bibliotecario.Id, bibliotecario.Nome, bibliotecario.Email, ETipoUsuario.BIBLIOTECARIO));
+
+            // Obra
+            CreateMap<AddObraRequest, Obra>();
         }
     }
 }
