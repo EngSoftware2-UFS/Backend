@@ -3,6 +3,7 @@ using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Infrastructure.Repositories.Interfaces;
+using Org.BouncyCastle.Crypto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,11 @@ namespace Biblioteca.Services.Services
             throw new NotImplementedException();
         }
 
+        public async Task<List<Obra>> GetAll()
+        {
+            return await _obraRepository.GetAll();
+        }
+        
         public async Task<Obra> GetById(ulong id)
         {
             Obra? obra = await _obraRepository.GetById(id);
@@ -42,15 +48,25 @@ namespace Biblioteca.Services.Services
             return obra;
         }
 
-        public Task<List<Obra>> GetByTitle(string title)
+        public async Task<List<Obra>> GetByTitle(string title)
         {
-            throw new NotImplementedException();
+            List<Obra> obras = await _obraRepository.GetByTitle(title);
+            if (obras == null)
+                throw new KeyNotFoundException("Not Found.");
+
+            return obras;
         }
 
-        public Task ReservarObra(AddReservaRequest request)
+        public async Task<List<Obra>> GetByGenero(ulong idGenero)
         {
-            throw new NotImplementedException();
+            List<Obra> obras = await _obraRepository.GetByGenero(idGenero);
+            return obras;
         }
+
+        //public Task ReservarObra(AddReservaRequest request)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Update(AddObraRequest request)
         {

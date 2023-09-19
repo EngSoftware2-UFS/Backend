@@ -1,43 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace Biblioteca.Domain.Models.Requests
 {
     public class AddObraRequest
     {
-        public string Titulo { get; private set; }
-        public string Idioma { get; private set; }
-        public int Ano { get; private set; }
-        public string ISBN { get; private set; }
-        public string Edicao { get; private set; }
-        public ulong Editora { get; private set; }
-        public ulong Genero { get; private set; }
-        public ulong BibliotecarioId { get; private set; }
+        public string Titulo { get;  set; }
+        public string Idioma { get;  set; }
+        public int Ano { get;  set; }
+        public string Isbn { get;  set; }
+        public string Edicao { get;  set; }
+        [Required]
+        public ulong EditoraId { get;  set; }
+        [Required]
+        public ulong GeneroId { get;  set; }
+        [Required]
+        public ulong BibliotecarioId { get;  set; }
 
-        //public List<ulong> Autores { get; private set; }
-        public AddObraRequest(
-            string titulo,
-            string idioma,
-            int ano,
-            string isbn,
-            string edicao,
-            ulong editora,
-            ulong genero,
-            ulong bibliotecarioId
-            /*List<ulong> autores*/)
-        {
-            Titulo = titulo;
-            Idioma = idioma;
-            Ano = ano;
-            ISBN = isbn;
-            Edicao = edicao;
-            Editora = editora;
-            Genero = genero;
-            BibliotecarioId = bibliotecarioId;
-            //Autores = autores;
-        }
+
+        //public AddObraRequest(
+        //    string titulo,
+        //    string idioma,
+        //    int ano,
+        //    string isbn,
+        //    string edicao,
+        //    ulong editora,
+        //    ulong genero,
+        //    ulong bibliotecarioId)
+        //{
+        //    Titulo = titulo;
+        //    Idioma = idioma;
+        //    Ano = ano;
+        //    Isbn = isbn;
+        //    Edicao = edicao;
+        //    EditoraId = editora;
+        //    GeneroId = genero;
+        //    BibliotecarioId = bibliotecarioId;
+        //}
     }
 }

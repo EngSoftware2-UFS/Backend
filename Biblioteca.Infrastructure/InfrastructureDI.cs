@@ -22,6 +22,7 @@ namespace Biblioteca.Infrastructure
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IReservaRepository, ReservaRepository>();
             services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
+            services.AddScoped<IObraRepository, ObraRepository>();
         }
     }
 }

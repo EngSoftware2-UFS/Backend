@@ -15,7 +15,9 @@ namespace Biblioteca.Domain.Interfaces
         Task Delete(ulong id);
         Task<List<Obra>> GetByTitle(string title);
         Task<Obra> GetById(ulong id);
+        Task<List<Obra>> GetByGenero(ulong idGenero);
+        Task<List<Obra>> GetAll();
 
-        Task ReservarObra(AddReservaRequest request);
+       // Task ReservarObra(AddReservaRequest request);
     }
 }

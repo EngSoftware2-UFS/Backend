@@ -34,15 +34,28 @@ namespace Biblioteca.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IList<Obra>> GetAll()
+        public async Task<List<Obra>> GetAll()
         {
-            return await _context.Set<Obra>().ToListAsync();
+            return await _context.Set<Obra>()
+                .Include(obra => obra.Autors)
+                .Include(obra => obra.Genero)
+                .ToListAsync();
         }
 
-        public async Task<IList<Obra>> GetByTitle(string title)
+        public async Task<List<Obra>> GetByTitle(string title)
         {
             return await _context.Set<Obra>()
                 .Where(o => o.Titulo.Equals(title))
+                .Include(obra => obra.Autors)
+                .Include(obra => obra.Genero)
+                .ToListAsync();
+        }
+
+        public async Task<List<Obra>> GetByGenero(ulong idGenero)
+        {
+            return await _context.Set<Obra>()
+                .Where(o => o.GeneroId == idGenero)
+                .Include(obra => obra.Autors)
                 .ToListAsync();
         }
 

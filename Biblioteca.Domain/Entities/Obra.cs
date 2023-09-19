@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Biblioteca.Domain.Entities;
 
@@ -28,6 +29,5 @@ public partial class Obra
     public virtual ICollection<Exemplare> Exemplares { get; set; } = new List<Exemplare>();
 
     public virtual ICollection<Autore> Autors { get; set; } = new List<Autore>();
-
     public virtual Genero Genero { get; set; } = null!;
 }
