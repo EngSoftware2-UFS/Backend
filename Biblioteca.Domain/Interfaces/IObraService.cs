@@ -11,7 +11,7 @@ namespace Biblioteca.Domain.Interfaces
     public interface IObraService
     {
         Task Add(AddObraRequest request);
-        void Update(AddObraRequest request);
+        Task Update(UpdateObraRequest request);
         Task Delete(ulong id);
         Task<List<Obra>> GetByTitle(string title);
         Task<Obra> GetById(ulong id);

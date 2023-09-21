@@ -5,6 +5,9 @@ using Biblioteca.Domain.Enums;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
 using Biblioteca.Domain.Views;
+using Microsoft.EntityFrameworkCore;
+using Biblioteca.Infrastructure.Context;
+using Org.BouncyCastle.Security;
 
 namespace Biblioteca.Services.Mappers
 {
@@ -43,8 +46,10 @@ namespace Biblioteca.Services.Mappers
                 .ConstructUsing(bibliotecario =>
                     new UserData(bibliotecario.Id, bibliotecario.Nome, bibliotecario.Email, ETipoUsuario.BIBLIOTECARIO));
 
+
             // Obra
             CreateMap<AddObraRequest, Obra>();
+            CreateMap<UpdateObraRequest, Obra>();
         }
     }
 }

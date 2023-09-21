@@ -19,8 +19,10 @@ namespace Biblioteca.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task Add(Obra entity)
+        public async Task Add(Obra entity, List<ulong> idAutores)
         {
+            entity.Autors = _context.Set<Autore>().Where(a => idAutores.Contains(a.Id)).ToList();
+            
             await _context.Set<Obra>().AddAsync(entity);
             await _context.SaveChangesAsync();
         }
@@ -62,13 +64,16 @@ namespace Biblioteca.Infrastructure.Repositories
         public async Task<Obra?> GetById(ulong id)
         {
             return await _context.Set<Obra>()
+                .Include(obra => obra.Autors)
                 .SingleOrDefaultAsync(o => o.Id == id );
                 
         }
 
-        public void Update(Obra entity)
+        public async Task Update(Obra entity, List<ulong> idAutores)
         {
+            entity.Autors = _context.Set<Autore>().Where(a => idAutores.Contains(a.Id)).ToList();
             _context.Set<Obra>().Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Biblioteca.Application.Controllers
     [ApiController]
     [Route("obras")]
     [TypeFilter(typeof(ExceptionFilter))]
-    //[Authorize]
+    [Authorize]
     public class ObraController : ControllerBase
     {
 
@@ -20,6 +20,7 @@ namespace Biblioteca.Application.Controllers
             _obraService = obraService;
         }
         [HttpPost]
+        [Authorize(Roles = "BIBLIOTECARIO")]
         public async Task<IActionResult> Add(AddObraRequest obra)
         {
             await _obraService.Add(obra);
@@ -52,16 +53,26 @@ namespace Biblioteca.Application.Controllers
             Obra obra = await _obraService.GetById(idObra);
             return Ok(obra);
         }
+
+        [HttpGet("idGenero")]
+        public async Task<IActionResult> GetByGenero(ulong idGenero)
+        {
+            List<Obra> obras = await _obraService.GetByGenero(idGenero);
+            return Ok(obras);
+        }
+        
         [HttpDelete("{idObra}")]
+        [Authorize(Roles = "BIBLIOTECARIO")]
         public async Task<IActionResult> Delete(ulong idObra)
         {
             await _obraService.Delete(idObra);
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> Update(AddObraRequest obra)
+        [Authorize(Roles = "BIBLIOTECARIO")]
+        public async Task<IActionResult> Update(UpdateObraRequest obra)
         {
-             _obraService.Update(obra);
+            await _obraService.Update(obra);
             return Ok();
         }
 

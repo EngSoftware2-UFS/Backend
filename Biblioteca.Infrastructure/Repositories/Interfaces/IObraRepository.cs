@@ -9,12 +9,12 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
 {
     public interface IObraRepository
     {
-        Task Add(Obra entity);
+        Task Add(Obra entity, List<ulong> idAutores);
         Task<List<Obra>> GetByTitle(string title);
         Task<List<Obra>> GetByGenero(ulong idGenero);
         Task<Obra?> GetById(ulong id);
         Task<List<Obra>> GetAll();
-        void Update(Obra entity);
+        Task Update(Obra entity, List<ulong> idAutores);
         Task Delete(ulong id);
     }
 }

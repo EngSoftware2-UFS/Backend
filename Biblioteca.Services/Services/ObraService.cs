@@ -26,12 +26,12 @@ namespace Biblioteca.Services.Services
         public async Task Add(AddObraRequest obraRequest)
         {
             Obra obra = _autoMapper.Map<Obra>(obraRequest);
-            await _obraRepository.Add(obra);
+            await _obraRepository.Add(obra, obraRequest.Autores);
         }
 
-        public Task Delete(ulong id)
+        public async Task Delete(ulong id)
         {
-            throw new NotImplementedException();
+            await _obraRepository.Delete(id);
         }
 
         public async Task<List<Obra>> GetAll()
@@ -68,9 +68,23 @@ namespace Biblioteca.Services.Services
         //    throw new NotImplementedException();
         //}
 
-        public void Update(AddObraRequest request)
+        public async Task Update(UpdateObraRequest request)
         {
-            throw new NotImplementedException();
+            Obra? obra = await _obraRepository.GetById(request.Id);
+            if (obra == null)
+                throw new KeyNotFoundException("Not Found.");
+
+            //Obra novaObra = _autoMapper.Map<Obra>(request);
+            obra.Titulo = request.Titulo;
+            obra.Idioma = request.Idioma;
+            obra.Ano = request.Ano;
+            obra.Isbn = request.Isbn;
+            obra.Edicao = request.Edicao;
+            obra.EditoraId = request.EditoraId;
+            obra.GeneroId = request.GeneroId;
+            obra.BibliotecarioId = request.BibliotecarioId;
+
+            await _obraRepository.Update(obra, request.Autores);
         }
     }
 }

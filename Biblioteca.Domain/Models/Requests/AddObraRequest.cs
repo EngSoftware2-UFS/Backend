@@ -7,7 +7,7 @@ namespace Biblioteca.Domain.Models.Requests
     {
         public string Titulo { get;  set; }
         public string Idioma { get;  set; }
-        public int Ano { get;  set; }
+        public uint Ano { get;  set; }
         public string Isbn { get;  set; }
         public string Edicao { get;  set; }
         [Required]
@@ -17,7 +17,7 @@ namespace Biblioteca.Domain.Models.Requests
         [Required]
         public ulong BibliotecarioId { get;  set; }
 
-
+        public List<ulong> Autores { get; set; }
         //public AddObraRequest(
         //    string titulo,
         //    string idioma,
