@@ -26,6 +26,7 @@ public partial class Obra
 
     public virtual Editora Editora { get; set; } = null!;
 
+    [JsonIgnore]
     public virtual ICollection<Exemplare> Exemplares { get; set; } = new List<Exemplare>();
 
     public virtual ICollection<Autore> Autors { get; set; } = new List<Autore>();
