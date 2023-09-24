@@ -32,13 +32,12 @@ namespace Biblioteca.Services
 
         public async Task Add(AddClienteRequest request)
         {
+            Cliente? cliente = await _clienteRepository.GetByEmailOrCpf(request.Email, request.CPF);
+            if (cliente != null)
+                throw new OperationCanceledException("Cpf ou E-mail inválido.");
+
             Cliente entity = _autoMapper.Map<Cliente>(request);
             await _clienteRepository.Add(entity);
-        }
-
-        public async Task Delete(ulong id)
-        {
-            await _clienteRepository.Delete(id);
         }
 
         public async Task<List<Cliente>> GetAll()
@@ -227,9 +226,39 @@ namespace Biblioteca.Services
             }
         }
 
-        public void Update(AddClienteRequest request)
+        public async Task Update(UpdateClienteRequest request)
         {
-            throw new NotImplementedException();
+            Cliente? cliente = await _clienteRepository.GetById(request.Id);
+            if (cliente == null)
+                throw new KeyNotFoundException("Not Found.");
+
+            if (!string.IsNullOrEmpty(request.Email) || !string.IsNullOrEmpty(request.Cpf))
+            {
+                Cliente? clienteEmail = await _clienteRepository.GetByEmailOrCpf(request.Email, request.Cpf);
+
+                if (clienteEmail != null && clienteEmail.Id != request.Id)
+                    throw new OperationCanceledException("Cpf ou E-mail inválido.");
+            }
+
+            cliente.Cpf = request.Cpf ?? cliente.Cpf;
+            cliente.Nome = request.Nome ?? cliente.Nome;
+            cliente.Email = request.Email ?? cliente.Email;
+
+            if (request.Endereco != null)
+            {
+                cliente.Endereco.Cidade = request.Endereco.Cidade ?? cliente.Endereco.Cidade;
+                cliente.Endereco.Logradouro = request.Endereco.Logradouro ?? cliente.Endereco.Logradouro;
+                cliente.Endereco.Numero = request.Endereco.Numero ?? cliente.Endereco.Numero;
+                cliente.Endereco.Bairro = request.Endereco.Bairro ?? cliente.Endereco.Bairro;
+                cliente.Endereco.Complemento = request.Endereco.Complemento ?? cliente.Endereco.Complemento;
+            }
+
+            await _clienteRepository.Update(cliente);
+        }
+
+        public async Task Delete(ulong id)
+        {
+            await _clienteRepository.Delete(id);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Biblioteca.Domain.Interfaces
         Task<Bibliotecario?> GetById(ulong id);
         Task<Bibliotecario?> GetByCpf(string cpf);
         Task<List<Bibliotecario>> GetByName(string name);
-        void Update(AddBibliotecarioRequest request);
+        Task Update(UpdateBibliotecarioRequest request);
         Task Delete(ulong id);
     }
 }

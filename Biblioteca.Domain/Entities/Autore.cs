@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text.Json.Serialization;
 
 namespace Biblioteca.Domain.Entities;
 
@@ -9,5 +8,6 @@ public partial class Autore
 
     public string Nome { get; set; } = null!;
 
+    [JsonIgnore]
     public virtual ICollection<Obra> Obras { get; set; } = new List<Obra>();
 }

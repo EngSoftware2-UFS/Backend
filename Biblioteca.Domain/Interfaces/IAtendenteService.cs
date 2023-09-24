@@ -10,7 +10,7 @@ namespace Biblioteca.Domain.Interfaces
         Task<AtendenteResponse?> GetById(ulong id);
         Task<AtendenteResponse?> GetByCpf(string cpf);
         Task<List<AtendenteResponse>> GetByName(string name);
-        void Update(AddAtendenteRequest request);
+        Task Update(UpdateAtendenteRequest request);
         Task Delete(ulong id);
     }
 }
