@@ -56,6 +56,17 @@ namespace Biblioteca.Application.Controllers
             return Ok(results);
         }
 
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update(ulong id, [FromBody] UpdateBibliotecarioRequest bibliotecario)
+        {
+            if (bibliotecario == null)
+                return BadRequest();
+
+            bibliotecario.Id = id;
+            await _bibliotecarioService.Update(bibliotecario);
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(ulong id)
         {

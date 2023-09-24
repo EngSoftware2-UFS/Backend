@@ -20,13 +20,12 @@ namespace Biblioteca.Services
 
         public async Task Add(AddAtendenteRequest request)
         {
+            Atendente? atendente = await _atendenteRepository.GetByEmailOrCpf(request.Email, request.CPF);
+            if (atendente != null)
+                throw new OperationCanceledException("Cpf ou E-mail inválido.");
+
             Atendente entity = _autoMapper.Map<Atendente>(request);
             await _atendenteRepository.Add(entity);
-        }
-
-        public async Task Delete(ulong id)
-        {
-            await _atendenteRepository.Delete(id);
         }
 
         public async Task<List<AtendenteResponse>> GetAll()
@@ -59,9 +58,30 @@ namespace Biblioteca.Services
             return _autoMapper.Map<List<AtendenteResponse>>(result);
         }
 
-        public void Update(AddAtendenteRequest request)
+        public async Task Update(UpdateAtendenteRequest request)
         {
-            throw new NotImplementedException();
+            Atendente? atendente = await _atendenteRepository.GetById(request.Id);
+            if (atendente == null)
+                throw new KeyNotFoundException("Not Found.");
+
+            if (!string.IsNullOrEmpty(request.Email) || !string.IsNullOrEmpty(request.Cpf))
+            {
+                Atendente? atendenteEmail = await _atendenteRepository.GetByEmailOrCpf(request.Email, request.Cpf);
+
+                if (atendenteEmail != null && atendenteEmail.Id != request.Id)
+                    throw new OperationCanceledException("Cpf ou E-mail inválido.");
+            }
+
+            atendente.Cpf = request.Cpf ?? atendente.Cpf;
+            atendente.Nome = request.Nome ?? atendente.Nome;
+            atendente.Email = request.Email ?? atendente.Email;
+
+            await _atendenteRepository.Update(atendente);
+        }
+
+        public async Task Delete(ulong id)
+        {
+            await _atendenteRepository.Delete(id);
         }
     }
 }

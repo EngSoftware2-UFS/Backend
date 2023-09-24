@@ -10,7 +10,8 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
         Task<Bibliotecario?> GetByCpf(string cpf);
         Task<List<Bibliotecario>> GetByName(string name);
         Task<Bibliotecario?> GetByEmail(string email);
-        void Update(Bibliotecario entity);
+        Task<Bibliotecario?> GetByEmailOrCpf(string? email, string? cpf);
+        Task Update(Bibliotecario entity);
         Task Delete(ulong id);
     }
 }

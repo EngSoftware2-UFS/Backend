@@ -54,6 +54,17 @@ namespace Biblioteca.Application.Controllers
             return Ok(result);
         }
 
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update(ulong id, [FromBody] UpdateAtendenteRequest atendente)
+        {
+            if (atendente == null)
+                return BadRequest();
+
+            atendente.Id = id;
+            await _atendenteService.Update(atendente);
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(ulong id)
         {

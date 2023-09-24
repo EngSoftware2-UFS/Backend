@@ -151,8 +151,20 @@ namespace Biblioteca.Application.Controllers
             return Ok(results);
         }
 
-        [HttpDelete("{id}")]
+        [HttpPatch("{id}")]
         [Authorize(Roles = "ATENDENTE,BIBLIOTECARIO")]
+        public async Task<IActionResult> Update(ulong id, [FromBody] UpdateClienteRequest cliente)
+        {
+            if (cliente == null)
+                return BadRequest();
+
+            cliente.Id = id;
+            await _clienteService.Update(cliente);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "BIBLIOTECARIO")]
         public async Task<IActionResult> Delete(ulong id)
         {
             await _clienteService.Delete(id);

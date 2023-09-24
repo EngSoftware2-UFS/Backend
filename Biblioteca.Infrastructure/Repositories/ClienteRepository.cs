@@ -56,9 +56,16 @@ namespace Biblioteca.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Email == email);
         }
 
-        public void Update(Cliente entity)
+        public async Task<Cliente?> GetByEmailOrCpf(string? email, string? cpf)
+        {
+            return await _context.Set<Cliente>()
+                .FirstOrDefaultAsync(x => x.Email == email || x.Cpf == cpf);
+        }
+
+        public async Task Update(Cliente entity)
         {
             _context.Set<Cliente>().Update(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(ulong id)

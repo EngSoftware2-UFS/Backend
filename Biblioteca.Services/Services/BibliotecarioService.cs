@@ -19,13 +19,12 @@ namespace Biblioteca.Services
 
         public async Task Add(AddBibliotecarioRequest request)
         {
+            Bibliotecario? bibliotecario = await _bibliotecarioRepository.GetByEmailOrCpf(request.Email, request.CPF);
+            if (bibliotecario != null)
+                throw new OperationCanceledException("Cpf ou E-mail inválido.");
+
             Bibliotecario entity = _autoMapper.Map<Bibliotecario>(request);
             await _bibliotecarioRepository.Add(entity);
-        }
-
-        public async Task Delete(ulong id)
-        {
-            await _bibliotecarioRepository.Delete(id);
         }
 
         public async Task<List<Bibliotecario>> GetAll()
@@ -58,9 +57,30 @@ namespace Biblioteca.Services
             return _autoMapper.Map<List<Bibliotecario>>(result);
         }
 
-        public void Update(AddBibliotecarioRequest request)
+        public async Task Update(UpdateBibliotecarioRequest request)
         {
-            throw new NotImplementedException();
+            Bibliotecario? bibliotecario = await _bibliotecarioRepository.GetById(request.Id);
+            if (bibliotecario == null)
+                throw new KeyNotFoundException("Not Found.");
+
+            if (!string.IsNullOrEmpty(request.Email) || !string.IsNullOrEmpty(request.Cpf))
+            {
+                Bibliotecario? bibliotecarioEmail = await _bibliotecarioRepository.GetByEmailOrCpf(request.Email, request.Cpf);
+
+                if (bibliotecarioEmail != null && bibliotecarioEmail.Id != request.Id)
+                    throw new OperationCanceledException("Cpf ou E-mail inválido.");
+            }
+
+            bibliotecario.Cpf = request.Cpf ?? bibliotecario.Cpf;
+            bibliotecario.Nome = request.Nome ?? bibliotecario.Nome;
+            bibliotecario.Email = request.Email ?? bibliotecario.Email;
+
+            await _bibliotecarioRepository.Update(bibliotecario);
+        }
+
+        public async Task Delete(ulong id)
+        {
+            await _bibliotecarioRepository.Delete(id);
         }
     }
 }
