@@ -1,5 +1,4 @@
 ﻿using Biblioteca.Domain.Models.Responses;
-using Biblioteca.Domain.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Text.Json;
@@ -22,6 +21,7 @@ namespace Biblioteca.Application.Filters
                 new { Name = "UnauthorizedAccessException", Code = 401 },
                 new { Name = "ArgumentException", Code = 409 },
                 new { Name = "AccessViolationException", Code = 403 },
+                new { Name = "OperationCanceledException", Code = 400 }
             };
 
             var exceptionType = context.Exception.GetType().Name;
