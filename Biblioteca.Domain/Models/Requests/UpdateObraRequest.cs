@@ -4,6 +4,7 @@ namespace Biblioteca.Domain.Models.Requests
 {
     public class UpdateObraRequest
     {
+        [JsonIgnore]
         public ulong Id { get; set; }
         public string? Titulo { get; set; }
         public string? Idioma { get; set; }

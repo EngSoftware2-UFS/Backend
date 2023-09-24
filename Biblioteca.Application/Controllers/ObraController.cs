@@ -77,13 +77,14 @@ namespace Biblioteca.Application.Controllers
             await _obraService.Delete(idObra);
             return Ok();
         }
-        [HttpPut]
+        [HttpPatch("{id}")]
         [Authorize(Roles = "BIBLIOTECARIO")]
-        public async Task<IActionResult> Update(UpdateObraRequest obra)
+        public async Task<IActionResult> Update(ulong id, [FromBody] UpdateObraRequest obra)
         {
             if (obra == null)
                 return BadRequest();
 
+            obra.Id = id;
             await _obraService.Update(obra);
             return Ok();
         }
