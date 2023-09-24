@@ -55,5 +55,12 @@ namespace Biblioteca.Application.Controllers
             Bibliotecario? results = await _bibliotecarioService.GetById(id);
             return Ok(results);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(ulong id)
+        {
+            await _bibliotecarioService.Delete(id);
+            return Ok();
+        }
     }
 }

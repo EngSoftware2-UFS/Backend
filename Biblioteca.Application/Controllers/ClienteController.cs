@@ -150,5 +150,13 @@ namespace Biblioteca.Application.Controllers
             EmprestimoResponse? results = await _clienteService.GetEmprestimo(idCliente, idEmprestimo);
             return Ok(results);
         }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "ATENDENTE,BIBLIOTECARIO")]
+        public async Task<IActionResult> Delete(ulong id)
+        {
+            await _clienteService.Delete(id);
+            return Ok();
+        }
     }
 }

@@ -53,5 +53,12 @@ namespace Biblioteca.Application.Controllers
             AtendenteResponse? result = await _atendenteService.GetById(id);
             return Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(ulong id)
+        {
+            await _atendenteService.Delete(id);
+            return Ok();
+        }
     }
 }
