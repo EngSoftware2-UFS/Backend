@@ -23,6 +23,9 @@ namespace Biblioteca.Infrastructure
             services.AddScoped<IReservaRepository, ReservaRepository>();
             services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
             services.AddScoped<IObraRepository, ObraRepository>();
+            services.AddScoped<IGeneroRepository, GeneroRepository>();
+            services.AddScoped<IAutorRepository, AutorRepository>();
+            services.AddScoped<IEditoraRepository, EditoraRepository>();
         }
     }
 }

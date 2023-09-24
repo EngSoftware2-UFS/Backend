@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Biblioteca.Domain.Models.Requests
 {
     public class UpdateObraRequest
     {
         public ulong Id { get; set; }
-        public string Titulo { get; set; }
-        public string Idioma { get; set; }
-        public uint Ano { get; set; }
-        public string Isbn { get; set; }
-        public string Edicao { get; set; }
-        [Required]
+        public string? Titulo { get; set; }
+        public string? Idioma { get; set; }
+        public uint? Ano { get; set; }
+        public string? Isbn { get; set; }
+        public string? Edicao { get; set; }
+        public string? EditoraNome { get; set; }
+        public string? EditoraNacionalidade { get; set; }
+        [JsonIgnore]
         public ulong EditoraId { get; set; }
-        [Required]
+        public string? GeneroNome { get; set; }
+        [JsonIgnore]
         public ulong GeneroId { get; set; }
-        [Required]
-        public ulong BibliotecarioId { get; set; }
 
-        public List<ulong> Autores { get; set; }
+        public List<string> Autores { get; set; } = new List<string>();
+        [JsonIgnore]
+        public List<ulong> AutoresId { get; set; } = new List<ulong>();
 
     }
 }

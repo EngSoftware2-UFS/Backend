@@ -255,11 +255,6 @@ public partial class InfraDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_obras_editoras1");
 
-            entity.HasOne(d => d.Genero).WithMany(p => p.Obras)
-                .HasForeignKey(d => d.GeneroId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("fk_obras_generos");
-
             entity.HasMany(d => d.Autors).WithMany(p => p.Obras)
                 .UsingEntity<Dictionary<string, object>>(
                     "Obrasautore",

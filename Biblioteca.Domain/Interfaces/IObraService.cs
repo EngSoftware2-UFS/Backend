@@ -1,10 +1,5 @@
 ﻿using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Models.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Biblioteca.Domain.Interfaces
 {
@@ -15,7 +10,8 @@ namespace Biblioteca.Domain.Interfaces
         Task Delete(ulong id);
         Task<List<Obra>> GetByTitle(string title);
         Task<Obra> GetById(ulong id);
-        Task<List<Obra>> GetByGenero(ulong idGenero);
+        Task<List<Obra>> GetByGenero(string genero);
+        Task<List<Obra>> GetByTitleAndGenero(string title, string genero);
         Task<List<Obra>> GetAll();
 
        // Task ReservarObra(AddReservaRequest request);

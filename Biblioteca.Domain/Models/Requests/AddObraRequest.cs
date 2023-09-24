@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Biblioteca.Domain.Models.Requests
 {
@@ -11,13 +12,22 @@ namespace Biblioteca.Domain.Models.Requests
         public string Isbn { get;  set; }
         public string Edicao { get;  set; }
         [Required]
+        public string EditoraNome { get; set; }
+        [Required]
+        public string EditoraNacionalidade { get; set; }
+        [JsonIgnore]
         public ulong EditoraId { get;  set; }
         [Required]
-        public ulong GeneroId { get;  set; }
-        [Required]
+        public string GeneroNome { get;  set; }
+        [JsonIgnore]
+        public ulong GeneroId { get; set; }
+        [JsonIgnore]
         public ulong BibliotecarioId { get;  set; }
 
-        public List<ulong> Autores { get; set; }
+        public List<string> Autores { get; set; } = new List<string>();
+        [JsonIgnore]
+        public List<ulong> AutoresId { get; set; } = new List<ulong>();
+
         //public AddObraRequest(
         //    string titulo,
         //    string idioma,

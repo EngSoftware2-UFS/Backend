@@ -1,9 +1,4 @@
 ﻿using Biblioteca.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Biblioteca.Infrastructure.Repositories.Interfaces
 {
@@ -11,7 +6,7 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
     {
         Task Add(Obra entity, List<ulong> idAutores);
         Task<List<Obra>> GetByTitle(string title);
-        Task<List<Obra>> GetByGenero(ulong idGenero);
+        Task<List<Obra>> GetByGenero(string genero);
         Task<Obra?> GetById(ulong id);
         Task<List<Obra>> GetAll();
         Task Update(Obra entity, List<ulong> idAutores);

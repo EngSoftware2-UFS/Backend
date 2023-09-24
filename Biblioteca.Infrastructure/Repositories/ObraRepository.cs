@@ -2,11 +2,6 @@
 using Biblioteca.Infrastructure.Context;
 using Biblioteca.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Biblioteca.Infrastructure.Repositories
 {
@@ -41,23 +36,27 @@ namespace Biblioteca.Infrastructure.Repositories
             return await _context.Set<Obra>()
                 .Include(obra => obra.Autors)
                 .Include(obra => obra.Genero)
+                .Include(obra => obra.Editora)
                 .ToListAsync();
         }
 
         public async Task<List<Obra>> GetByTitle(string title)
         {
             return await _context.Set<Obra>()
-                .Where(o => o.Titulo.Equals(title))
+                .Where(o => o.Titulo.ToLower().Contains(title.ToLower()))
                 .Include(obra => obra.Autors)
                 .Include(obra => obra.Genero)
+                .Include(obra => obra.Editora)
                 .ToListAsync();
         }
 
-        public async Task<List<Obra>> GetByGenero(ulong idGenero)
+        public async Task<List<Obra>> GetByGenero(string genero)
         {
             return await _context.Set<Obra>()
-                .Where(o => o.GeneroId == idGenero)
+                .Where(o => o.Genero.Nome.ToLower().Equals(genero.ToLower()))
                 .Include(obra => obra.Autors)
+                .Include(obra => obra.Genero)
+                .Include(obra => obra.Editora)
                 .ToListAsync();
         }
 
@@ -65,6 +64,8 @@ namespace Biblioteca.Infrastructure.Repositories
         {
             return await _context.Set<Obra>()
                 .Include(obra => obra.Autors)
+                .Include(obra => obra.Genero)
+                .Include(obra => obra.Editora)
                 .SingleOrDefaultAsync(o => o.Id == id );
                 
         }

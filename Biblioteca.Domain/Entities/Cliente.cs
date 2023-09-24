@@ -23,9 +23,5 @@ public partial class Cliente
 
     public int EnderecoId { get; set; }
 
-    //public virtual ICollection<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>();
-
     public virtual Endereco Endereco { get; set; } = null!;
-
-    //public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 }
