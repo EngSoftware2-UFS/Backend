@@ -13,7 +13,6 @@ namespace Biblioteca.Domain.Interfaces
         Task<List<Obra>> GetByGenero(string genero);
         Task<List<Obra>> GetByTitleAndGenero(string title, string genero);
         Task<List<Obra>> GetAll();
-
-       // Task ReservarObra(AddReservaRequest request);
+        Task ReservarObra(AddReservaRequest request);
     }
 }

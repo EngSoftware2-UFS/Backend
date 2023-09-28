@@ -14,12 +14,14 @@ namespace Biblioteca.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task Add(Obra entity, List<ulong> idAutores)
+        public async Task<ulong> Add(Obra entity, List<ulong> idAutores)
         {
             entity.Autors = _context.Set<Autore>().Where(a => idAutores.Contains(a.Id)).ToList();
             
             await _context.Set<Obra>().AddAsync(entity);
             await _context.SaveChangesAsync();
+
+            return entity.Id;
         }
 
         public async Task Delete(ulong id)
@@ -48,6 +50,15 @@ namespace Biblioteca.Infrastructure.Repositories
                 .Include(obra => obra.Genero)
                 .Include(obra => obra.Editora)
                 .ToListAsync();
+        }
+
+        public async Task<Obra?> GetByISBN(string ISBN)
+        {
+            return await _context.Set<Obra>()
+                .Include(obra => obra.Autors)
+                .Include(obra => obra.Genero)
+                .Include(obra => obra.Editora)
+                .SingleOrDefaultAsync(o => o.Isbn.ToLower().Equals(ISBN.ToLower()));
         }
 
         public async Task<List<Obra>> GetByGenero(string genero)

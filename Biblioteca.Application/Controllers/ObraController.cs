@@ -10,7 +10,7 @@ namespace Biblioteca.Application.Controllers
     [ApiController]
     [Route("obras")]
     [TypeFilter(typeof(ExceptionFilter))]
-    [Authorize]
+    //[Authorize]
     public class ObraController : ControllerBase
     {
 
@@ -88,6 +88,24 @@ namespace Biblioteca.Application.Controllers
             await _obraService.Update(obra);
             return Ok();
         }
+
+        [HttpPost("reservas")]
+        public async Task<IActionResult> AddReserva(AddReservaRequest reserva)
+        {
+            if (reserva == null)
+                return BadRequest();
+
+            //var loggedUser = _loginService.GetAuthenticatedUserById(User.Identity?.Name);
+            //if (loggedUser == null)
+            //    return Unauthorized("Usuário não encontrado!");
+
+            reserva.ClienteId = 1;
+
+            await _obraService.ReservarObra(reserva);
+            return Ok();
+
+        }
+
 
 
     }

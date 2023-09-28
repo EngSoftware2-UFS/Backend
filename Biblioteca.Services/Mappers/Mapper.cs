@@ -50,6 +50,9 @@ namespace Biblioteca.Services.Mappers
             // Obra
             CreateMap<AddObraRequest, Obra>();
             CreateMap<UpdateObraRequest, Obra>();
+            
+            // Reserva
+            CreateMap<AddReservaRequest, Reserva>();
         }
     }
 }
