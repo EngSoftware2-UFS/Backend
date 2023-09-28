@@ -3,6 +3,7 @@ using System;
 using Biblioteca.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Biblioteca.Infrastructure.Migrations
 {
     [DbContext(typeof(InfraDbContext))]
-    partial class InfraDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230928180018_ExemplarReserva")]
+    partial class ExemplarReserva
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

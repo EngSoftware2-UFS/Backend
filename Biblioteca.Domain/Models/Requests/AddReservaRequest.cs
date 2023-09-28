@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biblioteca.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Biblioteca.Domain.Models.Requests
     public class AddReservaRequest
     {
         public DateTime DataReserva { get; set; }
-        public string Status { get; set; } = null!;
+        public EStatusReserva Status { get; set; }
         [JsonIgnore]
         public ulong ClienteId { get; set; }
         public List<ulong>? Obras { get; set; }

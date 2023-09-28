@@ -293,23 +293,23 @@ public partial class InfraDbContext : DbContext
             //    .HasForeignKey(d => d.ClienteId)
             //    .HasConstraintName("FK_Reservas_Clientes_ClienteId");
 
-            //entity.HasMany(d => d.Exemplars).WithMany(p => p.Reservas)
-            //    .UsingEntity<Dictionary<string, object>>(
-            //        "ReservaExemplar",
-            //        r => r.HasOne<Exemplare>().WithMany()
-            //            .HasForeignKey("ExemplarId")
-            //            .HasConstraintName("fk_reserva_has_exemplares_exemplares1"),
-            //        l => l.HasOne<Reserva>().WithMany()
-            //            .HasForeignKey("ReservaId")
-            //            .HasConstraintName("fk_reserva_has_exemplares_reserva1"),
-            //        j =>
-            //        {
-            //            j.HasKey("ReservaId", "ExemplarId").HasName("PRIMARY");
-            //            j.ToTable("reservaExemplar");
-            //            j.HasIndex(new[] { "ExemplarId" }, "fk_reserva_has_exemplares_exemplares1");
-            //            j.IndexerProperty<ulong>("ReservaId").HasColumnName("reservaId");
-            //            j.IndexerProperty<ulong>("ExemplarId").HasColumnName("exemplarId");
-            //        });
+            entity.HasMany(d => d.Exemplars).WithMany(p => p.Reservas)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ReservaExemplar",
+                    r => r.HasOne<Exemplare>().WithMany()
+                        .HasForeignKey("ExemplarId")
+                        .HasConstraintName("fk_reserva_has_exemplares_exemplares1"),
+                    l => l.HasOne<Reserva>().WithMany()
+                        .HasForeignKey("ReservaId")
+                        .HasConstraintName("fk_reserva_has_exemplares_reserva1"),
+                    j =>
+                    {
+                        j.HasKey("ReservaId", "ExemplarId").HasName("PRIMARY");
+                        j.ToTable("reservaExemplar");
+                        j.HasIndex(new[] { "ExemplarId" }, "fk_reserva_has_exemplares_exemplares1");
+                        j.IndexerProperty<ulong>("ReservaId").HasColumnName("reservaId");
+                        j.IndexerProperty<ulong>("ExemplarId").HasColumnName("exemplarId");
+                    });
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -12,4 +12,5 @@ public partial class Exemplare
     public ulong ObraId { get; set; }
 
     public virtual Obra Obra { get; set; } = null!;
+    public virtual ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 }
