@@ -50,6 +50,7 @@ namespace Biblioteca.Application.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "CLIENTE,ATENDENTE,BIBLIOTECARIO")]
         public async Task<IActionResult> Get(ulong id)
         {
             Bibliotecario? results = await _bibliotecarioService.GetById(id);
