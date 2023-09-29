@@ -12,7 +12,7 @@ namespace Biblioteca.Application.Controllers
     [ApiController]
     [Route("bibliotecarios")]
     [TypeFilter(typeof(ExceptionFilter))]
-    [Authorize(Roles = "BIBLIOTECARIO")]
+    [Authorize]
     public class BibliotecarioController : ControllerBase
     {
         private readonly IBibliotecarioService _bibliotecarioService;
@@ -23,6 +23,7 @@ namespace Biblioteca.Application.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "BIBLIOTECARIO")]
         public async Task<IActionResult> Add(AddBibliotecarioRequest teste)
         {
             await _bibliotecarioService.Add(teste);
@@ -50,7 +51,6 @@ namespace Biblioteca.Application.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "CLIENTE,ATENDENTE,BIBLIOTECARIO")]
         public async Task<IActionResult> Get(ulong id)
         {
             Bibliotecario? results = await _bibliotecarioService.GetById(id);
@@ -58,6 +58,7 @@ namespace Biblioteca.Application.Controllers
         }
 
         [HttpPatch("{id}")]
+        [Authorize(Roles = "BIBLIOTECARIO")]
         public async Task<IActionResult> Update(ulong id, [FromBody] UpdateBibliotecarioRequest bibliotecario)
         {
             if (bibliotecario == null)
@@ -69,6 +70,7 @@ namespace Biblioteca.Application.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "BIBLIOTECARIO")]
         public async Task<IActionResult> Delete(ulong id)
         {
             await _bibliotecarioService.Delete(id);

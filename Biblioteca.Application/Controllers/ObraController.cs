@@ -10,7 +10,6 @@ namespace Biblioteca.Application.Controllers
     [ApiController]
     [Route("obras")]
     [TypeFilter(typeof(ExceptionFilter))]
-    [Authorize]
     public class ObraController : ControllerBase
     {
 
