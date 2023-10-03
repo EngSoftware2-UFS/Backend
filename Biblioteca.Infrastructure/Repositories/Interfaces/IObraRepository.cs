@@ -4,7 +4,8 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
 {
     public interface IObraRepository
     {
-        Task Add(Obra entity, List<ulong> idAutores);
+        Task<Obra> Add(Obra entity, List<ulong> idAutores);
+        Task<int> QuantidadeExemplares(ulong obraId);
         Task<List<Obra>> GetByTitle(string title);
         Task<List<Obra>> GetByGenero(string genero);
         Task<Obra?> GetById(ulong id);

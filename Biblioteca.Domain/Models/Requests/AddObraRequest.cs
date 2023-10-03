@@ -6,6 +6,7 @@ namespace Biblioteca.Domain.Models.Requests
 {
     public class AddObraRequest
     {
+        public int QuantidadeExemplares { get; set; }
         public string Titulo { get;  set; }
         public string Idioma { get;  set; }
         public uint Ano { get;  set; }

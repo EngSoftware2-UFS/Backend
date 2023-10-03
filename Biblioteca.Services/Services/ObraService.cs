@@ -13,18 +13,21 @@ namespace Biblioteca.Services.Services
         private readonly IGeneroRepository _generoRepository;
         private readonly IAutorRepository _autorRepository;
         private readonly IEditoraRepository _editoraRepository;
+        private readonly IExemplarRepository _exemplarRepository;
 
         public ObraService(IMapper autoMapper,
             IObraRepository obraRepository,
             IAutorRepository autorRepository,
             IGeneroRepository generoRepository,
-            IEditoraRepository editoraRepository)
+            IEditoraRepository editoraRepository,
+            IExemplarRepository exemplarRepository)
         {
             _autoMapper = autoMapper;
             _obraRepository = obraRepository;
             _autorRepository = autorRepository;
             _generoRepository = generoRepository;
             _editoraRepository = editoraRepository;
+            _exemplarRepository = exemplarRepository;
         }
 
         public async Task Add(AddObraRequest request)
@@ -58,7 +61,15 @@ namespace Biblioteca.Services.Services
             else request.EditoraId = editora.Id;
 
             Obra obra = _autoMapper.Map<Obra>(request);
-            await _obraRepository.Add(obra, request.AutoresId);
+            obra = await _obraRepository.Add(obra, request.AutoresId);
+
+            for (var i = 0; i < request.QuantidadeExemplares;  i++)
+            {
+                await _exemplarRepository.Add(new Exemplare() { 
+                    Disponivel = true,
+                    ObraId = obra.Id 
+                });
+            }
         }
 
         public async Task Delete(ulong id)
