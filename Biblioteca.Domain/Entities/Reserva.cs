@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Biblioteca.Domain.Enums;
 
 namespace Biblioteca.Domain.Entities;
 
@@ -15,5 +14,21 @@ public partial class Reserva
 
     public virtual Cliente Cliente { get; set; } = null!;
 
-    public virtual ICollection<Exemplare> Exemplars { get; set; } = new List<Exemplare>();
+
+    public void CriarReserva(ulong clienteId)
+    {
+        DataReserva = DateTime.Now;
+        Status = EStatusReserva.ATIVA.ToString();
+        ClienteId = clienteId;
+    }
+
+    public void CancelarReserva()
+    {
+        Status = EStatusReserva.CANCELADA.ToString();
+    }
+
+    public void FinalizarReserva()
+    {
+        Status = EStatusReserva.FINALIZADA.ToString();
+    }
 }

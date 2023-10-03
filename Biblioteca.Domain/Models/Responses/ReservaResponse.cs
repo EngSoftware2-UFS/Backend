@@ -9,6 +9,7 @@ namespace Biblioteca.Domain.Models.Responses
         public string Status { get; private set; } = "";
         public List<ObraShortResponse> Obras { get; private set; } = new List<ObraShortResponse>();
         public ulong? ClienteId { get; private set; } = null;
+        public string? ClienteNome { get; private set; } = null;
 
         public ReservaResponse() { }
 
@@ -24,6 +25,7 @@ namespace Biblioteca.Domain.Models.Responses
             Id = reservaView.Id;
             DataReserva = reservaView.DataReserva;
             Status = reservaView.Status;
+            ClienteNome = reservaView.clienteNome;
             addObra(reservaView.ObraId, reservaView.Titulo);
         }
 

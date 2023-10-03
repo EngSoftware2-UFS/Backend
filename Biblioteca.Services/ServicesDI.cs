@@ -13,6 +13,7 @@ namespace Biblioteca.Services
             services.AddScoped<IBibliotecarioService, BibliotecarioService>();
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IObraService, ObraService>();
+            services.AddScoped<IReservaService, ReservaService>();
         }
     }
 }

@@ -15,5 +15,6 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
         Task<Cliente?> GetByEmailOrCpf(string? email, string? cpf);
         Task Update(Cliente entity);
         Task Delete(ulong id);
+        Task<bool> ClienteInadimplente(ulong clienteId);
     }
 }

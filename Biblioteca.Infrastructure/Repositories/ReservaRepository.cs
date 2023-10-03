@@ -15,17 +15,42 @@ namespace Biblioteca.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task Add(Reserva entity)
+        public async Task<Reserva> CriarReserva(ulong clienteId)
         {
+            var entity = new Reserva();
+            entity.CriarReserva(clienteId);
             await _context.Set<Reserva>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+
+        public async Task CancelarReserva(Reserva reserva)
+        {
+            reserva.CancelarReserva();
+            _context.Set<Reserva>().Update(reserva);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Reserva>> GetAll()
+        public async Task FinalizarReserva(Reserva reserva)
         {
-            return await _context.Set<Reserva>()
-                .Include(reserva => reserva.Cliente)
-                .ToListAsync();
+            reserva.FinalizarReserva();
+            _context.Set<Reserva>().Update(reserva);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<ReservasView>> GetAll(string? status)
+        {
+            var results = await _context.ReservasView.FromSqlRaw($@"SELECT r.id, r.dataReserva, r.status, o.Id as obraId, o.titulo, r.clienteId, c.nome as clienteNome
+                                                    FROM reservaExemplar re
+                                                    JOIN reservas r ON (re.reservaId = r.id)
+                                                    JOIN exemplares e ON (re.exemplarId = e.id)
+                                                    JOIN obras o ON (o.id = e.obraId)
+                                                    JOIN clientes c ON (c.id = r.clienteId)").ToListAsync();
+
+            if (!string.IsNullOrEmpty(status))
+                return results.Where(r => r.Status.ToUpper() == status.ToUpper()).ToList();
+
+            return results;
         }
 
         public async Task<Reserva?> GetById(ulong id)
@@ -35,9 +60,22 @@ namespace Biblioteca.Infrastructure.Repositories
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public void Update(Reserva entity)
+        public async Task<bool> JaReservado(ulong clienteId, ulong obraId)
         {
-            _context.Set<Reserva>().Update(entity);
+            List<int> res = _context.Database.SqlQuery<int>($@"SELECT COUNT(*)
+                                                        FROM reservas r JOIN reservaExemplar re ON (r.id = re.reservaId)
+                                                        JOIN exemplares ex ON (re.exemplarId = ex.id)
+                                                        WHERE r.clienteId = {clienteId} AND ex.obraId = {obraId} AND r.status = 'ATIVA'").ToList();
+
+            var count = res.First();
+            return count > 0;
+        }
+
+        public async Task<List<ReservaExemplar>> GetExemplares(ulong reservaId)
+        {
+            return await _context.ReservaExemplar.FromSqlRaw($@"SELECT r.reservaId, r.exemplarId
+                                                                FROM reservaExemplar r
+                                                                WHERE r.reservaId = {reservaId}").ToListAsync();
         }
 
         public async Task<List<ReservasView>> GetByClientId(ulong idCliente)
@@ -50,11 +88,20 @@ namespace Biblioteca.Infrastructure.Repositories
                                                     WHERE r.clienteId = {idCliente}").ToListAsync();
         }
 
-        public async Task Delete(ulong id)
+        public async Task<List<ReservasView>> GetByClientName(string nomeCliente)
         {
-            var row = await _context.Set<Reserva>().SingleAsync(x => x.Id == id);
-            _context.Set<Reserva>().Remove(row);
-            await _context.SaveChangesAsync();
+            return await _context.ReservasView.FromSqlRaw($@"SELECT r.id, r.dataReserva, r.status, o.Id as obraId, o.titulo, r.clienteId, c.nome as clienteNome
+                                                    FROM reservaExemplar re
+                                                    JOIN reservas r ON (re.reservaId = r.id)
+                                                    JOIN exemplares e ON (re.exemplarId = e.id)
+                                                    JOIN obras o ON (o.id = e.obraId)
+                                                    JOIN clientes c ON (c.id = r.clienteId)
+                                                    WHERE c.nome LIKE '%{nomeCliente}%'").ToListAsync();
+        }
+
+        public void VerifyReservas()
+        {
+            _context.Database.ExecuteSqlRaw("CALL `verifica_reservas`");
         }
     }
 }
