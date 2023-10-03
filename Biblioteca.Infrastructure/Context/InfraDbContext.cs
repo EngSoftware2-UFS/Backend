@@ -42,10 +42,13 @@ public partial class InfraDbContext : DbContext
     public virtual DbSet<ReservasView> ReservasView { get; set; }
 
     public virtual DbSet<EmprestimosView> EmprestimosView { get; set; }
+    public virtual DbSet<ReservaExemplar> ReservaExemplar { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<EmprestimosView>().HasNoKey();
+
+        modelBuilder.Entity<ReservaExemplar>().HasNoKey();
 
         modelBuilder.Entity<ReservasView>().HasNoKey();
 
@@ -218,10 +221,6 @@ public partial class InfraDbContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Disponivel).HasColumnName("disponivel");
             entity.Property(e => e.ObraId).HasColumnName("obraId");
-
-            entity.HasOne(d => d.Obra).WithMany(p => p.Exemplares)
-                .HasForeignKey(d => d.ObraId)
-                .HasConstraintName("FK_Exemplares_Obras_ObraId");
         });
 
 
