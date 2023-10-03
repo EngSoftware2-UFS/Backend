@@ -11,5 +11,6 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
         Task<List<EmprestimosView>> GetByClientId(ulong idCliente);
         void Update(Emprestimo entity);
         Task Delete(ulong id);
+        void VerifyInadimplencia();
     }
 }

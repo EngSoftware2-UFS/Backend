@@ -74,5 +74,11 @@ namespace Biblioteca.Infrastructure.Repositories
             _context.Set<Cliente>().Remove(row);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> ClienteInadimplente(ulong clientId)
+        {
+            var rows = await _context.Set<Emprestimo>().Where(ep => ep.Inadimplencia && ep.ClienteId.Equals(clientId)).CountAsync();
+            return rows > 0;
+        }
     }
 }

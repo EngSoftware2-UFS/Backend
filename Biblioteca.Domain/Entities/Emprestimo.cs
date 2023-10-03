@@ -26,6 +26,4 @@ public partial class Emprestimo
     public virtual Atendente Atendente { get; set; } = null!;
 
     public virtual Cliente Cliente { get; set; } = null!;
-
-    public virtual ICollection<Exemplare> Exemplars { get; set; } = new List<Exemplare>();
 }

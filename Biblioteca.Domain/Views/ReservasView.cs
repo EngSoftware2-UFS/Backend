@@ -1,11 +1,4 @@
-﻿using Biblioteca.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Biblioteca.Domain.Views
+﻿namespace Biblioteca.Domain.Views
 {
     public class ReservasView
     {
@@ -15,5 +8,6 @@ namespace Biblioteca.Domain.Views
         public string Titulo { get; set; }
         public ulong ObraId { get; set; }
         public ulong ClienteId { get; set; }
+        public string clienteNome { get; set; }
     }
 }

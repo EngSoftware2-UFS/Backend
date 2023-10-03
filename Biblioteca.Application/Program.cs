@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Biblioteca.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,6 +90,8 @@ builder.Services.AddAuthentication(x =>
 ServicesDI.AddServices(builder.Services);
 InfrastructureDI.AddRepositories(builder.Services);
 
+builder.Services.AddSingleton<Rotinas>();
+builder.Services.AddHostedService(provider => provider.GetRequiredService<Rotinas>());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

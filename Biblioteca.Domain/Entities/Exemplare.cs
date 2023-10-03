@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Biblioteca.Domain.Entities;
+﻿namespace Biblioteca.Domain.Entities;
 
 public partial class Exemplare
 {
@@ -11,5 +8,13 @@ public partial class Exemplare
 
     public ulong ObraId { get; set; }
 
-    public virtual Obra Obra { get; set; } = null!;
+    public void CriarReserva()
+    {
+        Disponivel = false;
+    }
+
+    public void CancelarReserva()
+    {
+        Disponivel = true;
+    }
 }

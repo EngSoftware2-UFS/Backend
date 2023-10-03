@@ -56,5 +56,10 @@ namespace Biblioteca.Infrastructure.Repositories
             _context.Set<Emprestimo>().Remove(row);
             await _context.SaveChangesAsync();
         }
+
+        public void VerifyInadimplencia()
+        {
+            _context.Database.ExecuteSqlRaw("CALL `verifica_inadimplencia`");
+        }
     }
 }

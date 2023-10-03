@@ -21,7 +21,8 @@ namespace Biblioteca.Application.Filters
                 new { Name = "UnauthorizedAccessException", Code = 401 },
                 new { Name = "ArgumentException", Code = 409 },
                 new { Name = "AccessViolationException", Code = 403 },
-                new { Name = "OperationCanceledException", Code = 400 }
+                new { Name = "OperationCanceledException", Code = 400 },
+                new { Name = "InvalidOperationException", Code = 400 }
             };
 
             var exceptionType = context.Exception.GetType().Name;
