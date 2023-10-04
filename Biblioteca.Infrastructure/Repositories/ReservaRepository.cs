@@ -80,11 +80,12 @@ namespace Biblioteca.Infrastructure.Repositories
 
         public async Task<List<ReservasView>> GetByClientId(ulong idCliente)
         {
-            return await _context.ReservasView.FromSqlRaw($@"SELECT r.id, r.dataReserva, r.status, o.Id as obraId, o.titulo, r.clienteId
+            return await _context.ReservasView.FromSqlRaw($@"SELECT r.id, r.dataReserva, r.status, o.Id as obraId, o.titulo, r.clienteId, c.nome as clienteNome
                                                     FROM reservaExemplar re
                                                     JOIN reservas r ON (re.reservaId = r.id)
                                                     JOIN exemplares e ON (re.exemplarId = e.id)
                                                     JOIN obras o ON (o.id = e.obraId)
+                                                    JOIN clientes c ON (c.id = r.clienteId)
                                                     WHERE r.clienteId = {idCliente}").ToListAsync();
         }
 
