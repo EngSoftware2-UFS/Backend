@@ -14,7 +14,7 @@ namespace Biblioteca.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task Add(Exemplare exemplar)
+        public void Add(Exemplare exemplar)
         {
             _context.Database.ExecuteSqlRaw($"INSERT INTO exemplares (disponivel, obraId) VALUES ({exemplar.Disponivel}, {exemplar.ObraId})");
         }
@@ -37,18 +37,27 @@ namespace Biblioteca.Infrastructure.Repositories
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task AddExemplarToReserva(ulong reservaId, Exemplare exemplar)
+        public void AddExemplarToReserva(ulong reservaId, Exemplare exemplar)
         {
             exemplar.CriarReserva();
             _context.Database.ExecuteSqlRaw($"UPDATE exemplares SET disponivel = {exemplar.Disponivel} WHERE id = {exemplar.Id}");
             _context.Database.ExecuteSqlRaw("INSERT INTO reservaExemplar VALUES ({0}, {1})", reservaId, exemplar.Id);
         }
 
-        public async Task RemoveExemplarFromReserva(ulong reservaId, Exemplare exemplar)
+        public void AddExemplarToEmprestimo(ulong reservaId, ulong exemplarId)
+        {
+            _context.Database.ExecuteSqlRaw("INSERT INTO emprestimoExemplar VALUES ({0}, {1})", reservaId, exemplarId);
+        }
+
+        public void RemoveExemplarFromReserva(Exemplare exemplar)
         {
             exemplar.CancelarReserva();
             _context.Database.ExecuteSqlRaw($"UPDATE exemplares SET disponivel = {exemplar.Disponivel} WHERE id = {exemplar.Id}");
-            //_context.Database.ExecuteSqlRaw("DELETE FROM reservaExemplar WHERE reservaId = {0} AND exemplarId = {1}", reservaId, exemplar.Id);
+        }
+
+        public void DisponibilizarExemplar(ulong exemplarId)
+        {
+            _context.Database.ExecuteSqlRaw($"UPDATE exemplares SET disponivel = 1 WHERE id = {exemplarId}");
         }
     }
 }

@@ -18,6 +18,4 @@ public partial class Atendente
     public string Senha { get; set; } = null!;
 
     public DateTime DataCadastro { get; set; }
-
-    public virtual ICollection<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>();
 }

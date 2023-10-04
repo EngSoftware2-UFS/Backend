@@ -5,6 +5,6 @@
         ATIVO,
         CANCELADO,
         ATRASADO,
-        CONCLUIDO
+        DEVOLVIDO
     }
 }

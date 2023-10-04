@@ -5,12 +5,16 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
 {
     public interface IEmprestimoRepository
     {
-        Task Add(Emprestimo entity);
-        Task<List<Emprestimo>> GetAll();
+        Task<Emprestimo> CriarEmprestimo(ulong atendenteId, ulong clienteId);
+        Task RenovarEmprestimo(Emprestimo emprestimo);
+        Task Devolver(Emprestimo emprestimo);
+        Task PagarMultaEDevolver(Emprestimo emprestimo);
+        Task Cancelar(Emprestimo emprestimo);
+        Task<List<EmprestimosView>> GetAll(string? status);
         Task<Emprestimo?> GetById(ulong id);
         Task<List<EmprestimosView>> GetByClientId(ulong idCliente);
-        void Update(Emprestimo entity);
-        Task Delete(ulong id);
+        Task<List<EmprestimosView>> GetByClientName(string nomeCliente);
+        Task<List<EmprestimoExemplar>> GetExemplares(ulong emprestimoId);
         void VerifyInadimplencia();
     }
 }

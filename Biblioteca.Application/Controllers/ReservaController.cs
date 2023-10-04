@@ -53,15 +53,15 @@ namespace Biblioteca.Application.Controllers
             return Ok();
         }
 
-        [HttpPost("cancelar")]
+        [HttpPatch("{reservaId}/cancelar")]
         [Authorize(Roles = "CLIENTE")]
-        public async Task<IActionResult> Cancelar(CancelarReservaRequest request)
+        public async Task<IActionResult> Cancelar(ulong reservaId)
         {
             var loggedUser = _loginService.GetAuthenticatedUserById(User.Identity?.Name);
             if (loggedUser == null)
                 return NotFound();
 
-            request.setClientId(loggedUser.Id);
+            var request = new CancelarReservaRequest(loggedUser.Id, reservaId);
             await _reservaService.CancelarReserva(request);
             return Ok();
         }

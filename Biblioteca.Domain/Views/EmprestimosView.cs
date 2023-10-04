@@ -19,5 +19,6 @@ namespace Biblioteca.Domain.Views
         public ulong ObraId { get; set; }
         public string Titulo { get; set; }
         public ulong ClienteId { get; set; }
+        public string ClienteNome { get; set; }
     }
 }
