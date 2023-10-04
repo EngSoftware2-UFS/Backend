@@ -26,6 +26,7 @@ namespace Biblioteca.Domain.Models.Responses
             DataReserva = reservaView.DataReserva;
             Status = reservaView.Status;
             ClienteNome = reservaView.clienteNome;
+            ClienteId = reservaView.ClienteId;
             addObra(reservaView.ObraId, reservaView.Titulo);
         }
 
