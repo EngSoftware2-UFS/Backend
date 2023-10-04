@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain.Entities;
+using Biblioteca.Domain.Enums;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
@@ -107,6 +108,12 @@ namespace Biblioteca.Services.Services
 
             if (reservaEntity == null) 
                 throw new InvalidOperationException("Reserva não encontrada.");
+
+            if (reservaEntity.Status == EStatusReserva.CANCELADA.ToString())
+                throw new InvalidOperationException($"Esta reserva já está cancelada.");
+
+            if (reservaEntity.Status != EStatusReserva.ATIVA.ToString())
+                throw new InvalidOperationException($"Não é possível cancelar uma reserva {reservaEntity.Status.ToLower()}.");
 
             for (var i = 0; i < reservaExemplares.Count; i++)
             {
