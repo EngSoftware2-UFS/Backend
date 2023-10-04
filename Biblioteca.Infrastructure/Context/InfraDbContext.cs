@@ -40,13 +40,15 @@ public partial class InfraDbContext : DbContext
     public virtual DbSet<Reserva> Reservas { get; set; }
 
     public virtual DbSet<ReservasView> ReservasView { get; set; }
-
     public virtual DbSet<EmprestimosView> EmprestimosView { get; set; }
     public virtual DbSet<ReservaExemplar> ReservaExemplar { get; set; }
+    public virtual DbSet<EmprestimoExemplar> EmprestimoExemplar { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<EmprestimosView>().HasNoKey();
+
+        modelBuilder.Entity<EmprestimoExemplar>().HasNoKey();
 
         modelBuilder.Entity<ReservaExemplar>().HasNoKey();
 

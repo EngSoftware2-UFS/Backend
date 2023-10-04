@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Domain.Entities;
+using Biblioteca.Domain.Enums;
 using Biblioteca.Domain.Views;
 
 namespace Biblioteca.Domain.Models.Responses
@@ -14,6 +15,7 @@ namespace Biblioteca.Domain.Models.Responses
         public string Status { get; private set; } = "";
         public List<ObraShortResponse> Obras { get; private set; } = new List<ObraShortResponse>();
         public ulong? ClienteId { get; private set; } = null;
+        public string? ClienteNome { get; private set; } = null;
         public double? Multa { get; private set; } = null;
 
         public EmprestimoResponse() { }
@@ -45,6 +47,7 @@ namespace Biblioteca.Domain.Models.Responses
             QuantidadeRenovacao = emprestimoView.QuantidadeRenovacao;
             Inadimplencia = emprestimoView.Inadimplencia;
             Status = emprestimoView.Status;
+            ClienteNome = emprestimoView.ClienteNome;
             addObra(emprestimoView.ObraId, emprestimoView.Titulo);
             if (verificaInadimplencia())
                 Multa = calcularMulta();
@@ -55,27 +58,12 @@ namespace Biblioteca.Domain.Models.Responses
             Obras.Add(new ObraShortResponse(obraId, titulo));
         }
 
-        public void setClienteId(ulong clienteId)
-        {
-            ClienteId = clienteId;
-        }
-
-        public void renovarEmprestimo()
-        {
-            if (QuantidadeRenovacao > 0)
-            {
-                QuantidadeRenovacao -= 1;
-                DataDevolucao = DataDevolucao.HasValue ? DataDevolucao.Value.AddDays(7) : null;
-            }
-            else throw new OperationCanceledException("Não é possível fazer mais renovações para esse empréstimo.");
-        }
-
         public double calcularMulta()
         {
             const double valorMultaPorDia = 1.00;
-            if (verificaInadimplencia() && DataDevolucao.HasValue)
+            if (verificaInadimplencia())
             {
-                var diasUltrapassados = (DataDevolucao.Value - DateTime.UtcNow).TotalDays;
+                var diasUltrapassados = (DateTime.Today - PrazoDevolucao).TotalDays;
                 double multa = diasUltrapassados * valorMultaPorDia;
                 return multa;
             }
@@ -85,7 +73,14 @@ namespace Biblioteca.Domain.Models.Responses
 
         private bool verificaInadimplencia()
         {
-            if (DataDevolucao.HasValue && DataDevolucao.Value > DateTime.UtcNow)
+            if (Status != EStatusEmprestimo.ATIVO.ToString()
+                && Status != EStatusEmprestimo.ATRASADO.ToString())
+                return false;
+
+            if (Inadimplencia)
+                return true;
+
+            if (PrazoDevolucao < DateTime.Now)
             {
                 if (!Inadimplencia) Inadimplencia = true;
                 return true;

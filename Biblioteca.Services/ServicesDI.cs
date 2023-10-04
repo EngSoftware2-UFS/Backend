@@ -14,6 +14,7 @@ namespace Biblioteca.Services
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IObraService, ObraService>();
             services.AddScoped<IReservaService, ReservaService>();
+            services.AddScoped<IEmprestimoService, EmprestimoService>();
         }
     }
 }

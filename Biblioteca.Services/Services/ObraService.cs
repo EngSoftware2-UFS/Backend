@@ -65,7 +65,7 @@ namespace Biblioteca.Services.Services
 
             for (var i = 0; i < request.QuantidadeExemplares;  i++)
             {
-                await _exemplarRepository.Add(new Exemplare() { 
+                _exemplarRepository.Add(new Exemplare() { 
                     Disponivel = true,
                     ObraId = obra.Id 
                 });

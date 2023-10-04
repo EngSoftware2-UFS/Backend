@@ -4,7 +4,6 @@ using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
 using Biblioteca.Domain.Views;
 using Biblioteca.Infrastructure.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteca.Services.Services
 {
@@ -97,7 +96,7 @@ namespace Biblioteca.Services.Services
                 if (exemplar == null)
                     throw new InvalidOperationException("Alguma obra da reserva não contém exemplar disponível.");
 
-                await _exemplarRepository.AddExemplarToReserva(reservaCriada.Id, exemplar);
+                _exemplarRepository.AddExemplarToReserva(reservaCriada.Id, exemplar);
             }
         }
 
@@ -111,34 +110,23 @@ namespace Biblioteca.Services.Services
 
             for (var i = 0; i < reservaExemplares.Count; i++)
             {
-                var exemplarId = reservaExemplares[i].exemplarId;
+                var exemplarId = reservaExemplares[i].ExemplarId;
                 var exemplar = await _exemplarRepository.GetById(exemplarId);
                 if (exemplar != null)
                 {
-                    await _exemplarRepository.RemoveExemplarFromReserva(reserva.ReservaId, exemplar);
+                    _exemplarRepository.RemoveExemplarFromReserva(exemplar);
                 }
             }
 
             await _reservaRepository.CancelarReserva(reservaEntity);
         }
 
-        public async Task FinalizarReserva(CancelarReservaRequest reserva)
+        public async Task FinalizarReserva(ulong reservaId)
         {
-            var reservaExemplares = await _reservaRepository.GetExemplares(reserva.ReservaId);
-            var reservaEntity = await _reservaRepository.GetById(reserva.ReservaId);
+            var reservaEntity = await _reservaRepository.GetById(reservaId);
 
             if (reservaEntity == null)
                 throw new InvalidOperationException("Reserva não encontrada.");
-
-            for (var i = 0; i < reservaExemplares.Count; i++)
-            {
-                var exemplarId = reservaExemplares[i].exemplarId;
-                var exemplar = await _exemplarRepository.GetById(exemplarId);
-                if (exemplar != null)
-                {
-                    await _exemplarRepository.RemoveExemplarFromReserva(reserva.ReservaId, exemplar);
-                }
-            }
 
             await _reservaRepository.FinalizarReserva(reservaEntity);
         }

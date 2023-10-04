@@ -10,6 +10,6 @@ namespace Biblioteca.Domain.Interfaces
         Task<List<ReservaResponse>> GetReservasByClient(string nomeCliente, string? status);
         Task CriarReserva(CriarReservaRequest reserva);
         Task CancelarReserva(CancelarReservaRequest reserva);
-        Task FinalizarReserva(CancelarReservaRequest reserva);
+        Task FinalizarReserva(ulong reservaId);
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Biblioteca.Domain.Views
 {
-    public class ReservaExemplar
+    public class EmprestimoExemplar
     {
-        public ulong ReservaId { get; set; }
+        public ulong EmprestimoId { get; set; }
         public ulong ExemplarId { get; set; }
     }
 }
