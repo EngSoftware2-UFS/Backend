@@ -63,7 +63,7 @@ namespace Biblioteca.Domain.Models.Responses
             const double valorMultaPorDia = 1.00;
             if (verificaInadimplencia())
             {
-                var diasUltrapassados = (DateTime.Today - PrazoDevolucao.Date.Date).TotalDays;
+                var diasUltrapassados = (DateTime.Today - PrazoDevolucao.Date).TotalDays;
                 double multa = diasUltrapassados * valorMultaPorDia;
                 return multa;
             }
