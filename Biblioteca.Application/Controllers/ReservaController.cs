@@ -54,7 +54,7 @@ namespace Biblioteca.Application.Controllers
         }
 
         [HttpPatch("{reservaId}/cancelar")]
-        [Authorize(Roles = "CLIENTE")]
+        [Authorize(Roles = "CLIENTE,ATENDENTE")]
         public async Task<IActionResult> Cancelar(ulong reservaId)
         {
             var loggedUser = _loginService.GetAuthenticatedUserById(User.Identity?.Name);
