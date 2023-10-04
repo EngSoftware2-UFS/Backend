@@ -72,7 +72,7 @@ public partial class Emprestimo
         const double valorMultaPorDia = 1.00;
         if (verificaInadimplencia())
         {
-            var diasUltrapassados = (DateTime.Today - PrazoDevolucao).TotalDays;
+            var diasUltrapassados = (DateTime.Today - PrazoDevolucao.Date).TotalDays;
             double multa = diasUltrapassados * valorMultaPorDia;
             return multa;
         }
