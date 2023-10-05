@@ -39,6 +39,8 @@ namespace Biblioteca.Services.Services
                 throw new InvalidOperationException("O ISBN informado é inválido.");
 
             request.Isbn = Regex.Replace(request.Isbn, @"[^\d]", "");
+            if (request.Isbn.Length != 13)
+                throw new InvalidOperationException("Utilize o formato ISBN-13.");
 
             Genero? genero = await _generoRepository.GetByName(request.GeneroNome);
             if (genero == null)
@@ -141,7 +143,11 @@ namespace Biblioteca.Services.Services
                 throw new InvalidOperationException("O ISBN informado é inválido.");
 
             if (!string.IsNullOrEmpty(request.Isbn))
+            {
                 request.Isbn = Regex.Replace(request.Isbn, @"[^\d]", "");
+                if (request.Isbn.Length != 13)
+                    throw new InvalidOperationException("Utilize o formato ISBN-13.");
+            }
 
             if (!string.IsNullOrEmpty(request.GeneroNome))
             {
