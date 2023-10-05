@@ -26,5 +26,11 @@ namespace Biblioteca.Domain.Models.Requests
             DataCadastro = DateTime.UtcNow;
             Endereco = endereco;
         }
+
+        public void TrimCpf()
+        {
+            CPF = CPF.Trim();
+            CPF = CPF.Replace(".", "").Replace("-", "");
+        }
     }
 }

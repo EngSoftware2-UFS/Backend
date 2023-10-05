@@ -4,6 +4,7 @@ using Biblioteca.Infrastructure.Repositories.Interfaces;
 using AutoMapper;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
+using Biblioteca.Services.Common;
 
 namespace Biblioteca.Services
 {
@@ -20,6 +21,14 @@ namespace Biblioteca.Services
 
         public async Task Add(AddAtendenteRequest request)
         {
+            if (!Validator.IsCpf(request.CPF))
+                throw new InvalidOperationException("Cpf inválido.");
+
+            if (!Validator.IsEmail(request.Email))
+                throw new InvalidOperationException("E-mail inválido.");
+
+            request.TrimCpf();
+
             Atendente? atendente = await _atendenteRepository.GetByEmailOrCpf(request.Email, request.CPF);
             if (atendente != null)
                 throw new OperationCanceledException("Cpf ou E-mail inválido.");
@@ -64,6 +73,12 @@ namespace Biblioteca.Services
             if (atendente == null)
                 throw new KeyNotFoundException("Not Found.");
 
+            if (!string.IsNullOrEmpty(request.Cpf) && !Validator.IsCpf(request.Cpf))
+                throw new InvalidOperationException("Cpf inválido.");
+
+            if (!string.IsNullOrEmpty(request.Email) && !Validator.IsEmail(request.Email))
+                throw new InvalidOperationException("E-mail inválido.");
+
             if (!string.IsNullOrEmpty(request.Email) || !string.IsNullOrEmpty(request.Cpf))
             {
                 Atendente? atendenteEmail = await _atendenteRepository.GetByEmailOrCpf(request.Email, request.Cpf);
@@ -71,6 +86,9 @@ namespace Biblioteca.Services
                 if (atendenteEmail != null && atendenteEmail.Id != request.Id)
                     throw new OperationCanceledException("Cpf ou E-mail inválido.");
             }
+
+            if (!string.IsNullOrEmpty(request.Cpf))
+                request.TrimCpf();
 
             atendente.Cpf = request.Cpf ?? atendente.Cpf;
             atendente.Nome = request.Nome ?? atendente.Nome;

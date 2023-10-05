@@ -9,6 +9,7 @@ using Biblioteca.Domain.Enums;
 using Biblioteca.Domain.Views;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Http;
+using Biblioteca.Services.Common;
 
 namespace Biblioteca.Services
 {
@@ -32,6 +33,14 @@ namespace Biblioteca.Services
 
         public async Task Add(AddClienteRequest request)
         {
+            if (!Validator.IsCpf(request.CPF))
+                throw new InvalidOperationException("Cpf inválido.");
+
+            if (!Validator.IsEmail(request.Email))
+                throw new InvalidOperationException("E-mail inválido.");
+
+            request.TrimCpf();
+
             Cliente? cliente = await _clienteRepository.GetByEmailOrCpf(request.Email, request.CPF);
             if (cliente != null)
                 throw new OperationCanceledException("Cpf ou E-mail inválido.");
@@ -232,6 +241,12 @@ namespace Biblioteca.Services
             if (cliente == null)
                 throw new KeyNotFoundException("Not Found.");
 
+            if (!string.IsNullOrEmpty(request.Cpf) && !Validator.IsCpf(request.Cpf))
+                throw new InvalidOperationException("Cpf inválido.");
+
+            if (!string.IsNullOrEmpty(request.Email) && !Validator.IsEmail(request.Email))
+                throw new InvalidOperationException("E-mail inválido.");
+
             if (!string.IsNullOrEmpty(request.Email) || !string.IsNullOrEmpty(request.Cpf))
             {
                 Cliente? clienteEmail = await _clienteRepository.GetByEmailOrCpf(request.Email, request.Cpf);
@@ -239,6 +254,9 @@ namespace Biblioteca.Services
                 if (clienteEmail != null && clienteEmail.Id != request.Id)
                     throw new OperationCanceledException("Cpf ou E-mail inválido.");
             }
+
+            if (!string.IsNullOrEmpty(request.Cpf))
+                request.TrimCpf();
 
             cliente.Cpf = request.Cpf ?? cliente.Cpf;
             cliente.Nome = request.Nome ?? cliente.Nome;

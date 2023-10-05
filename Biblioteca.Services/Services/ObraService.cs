@@ -3,6 +3,7 @@ using Biblioteca.Domain.Entities;
 using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Infrastructure.Repositories.Interfaces;
+using Biblioteca.Services.Common;
 
 namespace Biblioteca.Services.Services
 {
@@ -32,6 +33,9 @@ namespace Biblioteca.Services.Services
 
         public async Task Add(AddObraRequest request)
         {
+            if (!Validator.IsIsbn(request.Isbn))
+                throw new InvalidOperationException("O ISBN informado é inválido.");
+
             Genero? genero = await _generoRepository.GetByName(request.GeneroNome);
             if (genero == null)
             {
@@ -127,12 +131,15 @@ namespace Biblioteca.Services.Services
             if (obra == null)
                 throw new KeyNotFoundException("Not Found.");
 
-            //Obra novaObra = _autoMapper.Map<Obra>(request);
             obra.Titulo = request.Titulo ?? obra.Titulo;
             obra.Idioma = request.Idioma ?? obra.Idioma;
             obra.Ano = request.Ano ?? obra.Ano;
             obra.Isbn = request.Isbn ?? obra.Isbn;
             obra.Edicao = request.Edicao ?? obra.Edicao;
+
+
+            if (!string.IsNullOrEmpty(request.Isbn) && !Validator.IsIsbn(request.Isbn))
+                throw new InvalidOperationException("O ISBN informado é inválido.");
 
             if (!string.IsNullOrEmpty(request.GeneroNome))
             {

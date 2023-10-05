@@ -5,7 +5,9 @@ using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Domain.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI.Common;
 
 namespace Biblioteca.Application.Controllers
 {
@@ -36,19 +38,24 @@ namespace Biblioteca.Application.Controllers
         [Authorize(Roles = "ATENDENTE,BIBLIOTECARIO")]
         public async Task<IActionResult> Get(string? cpf, string? name)
         {
+            var loggedUser = _loginService.GetAuthenticatedUserById(User.Identity?.Name);
+
             if (!string.IsNullOrEmpty(cpf))
             {
                 Cliente? result = await _clienteService.GetByCpf(cpf);
+                result?.MaskCpf(loggedUser?.TipoUsuario == Domain.Enums.ETipoUsuario.ATENDENTE);
                 return Ok(result);
             }
             else if (!string.IsNullOrEmpty(name))
             {
                 List<Cliente> results = await _clienteService.GetByName(name);
+                results.ForEach(result => result.MaskCpf(loggedUser?.TipoUsuario == Domain.Enums.ETipoUsuario.ATENDENTE));
                 return Ok(results);
             }
             else
             {
                 List<Cliente> results = await _clienteService.GetAll();
+                results.ForEach(result => result.MaskCpf(loggedUser?.TipoUsuario == Domain.Enums.ETipoUsuario.ATENDENTE));
                 return Ok(results);
             }
         }
@@ -63,8 +70,9 @@ namespace Biblioteca.Application.Controllers
                 && loggedUser.Id != idCliente)
                 return NotFound();
 
-            Cliente? results = await _clienteService.GetById(idCliente);
-            return Ok(results);
+            Cliente? result = await _clienteService.GetById(idCliente);
+            result?.MaskCpf(loggedUser?.TipoUsuario == Domain.Enums.ETipoUsuario.ATENDENTE);
+            return Ok(result);
         }
 
         [HttpGet("{idCliente}/reservas")]
