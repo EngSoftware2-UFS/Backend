@@ -64,13 +64,14 @@ namespace Biblioteca.Services.Common
                 return false;
 
             int soma = 0;
+            //9788595086357
             for (var i = 0; i < isbnDigits.Length - 1; i++)
             {
-                var digit = Convert.ToInt32(isbnDigits[i]);
+                var digit = Convert.ToInt32(isbnDigits[i].ToString());
                 if (i % 2 == 0)
-                    soma += (digit * 3);
-                else
                     soma += digit;
+                else
+                    soma += (digit * 3);
             }
 
             var verifiedDigit = 10 - (soma % 10);
