@@ -12,4 +12,10 @@ public partial class UpdateBibliotecarioRequest
     public string? Cpf { get; set; } = null!;
 
     public string? Email { get; set; } = null!;
+
+    public void TrimCpf()
+    {
+        Cpf = Cpf?.Trim();
+        Cpf = Cpf?.Replace(".", "").Replace("-", "");
+    }
 }

@@ -14,10 +14,12 @@ namespace Biblioteca.Application.Controllers
     public class AtendenteController : ControllerBase
     {
         private readonly IAtendenteService _atendenteService;
+        private readonly ILoginService _loginService;
 
-        public AtendenteController(IAtendenteService atendenteService)
+        public AtendenteController(IAtendenteService atendenteService, ILoginService loginService)
         {
             _atendenteService = atendenteService;
+            _loginService = loginService;
         }
 
         [HttpPost]
@@ -30,19 +32,24 @@ namespace Biblioteca.Application.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string? cpf, string? name)
         {
+            var loggedUser = _loginService.GetAuthenticatedUserById(User.Identity?.Name);
+
             if (!string.IsNullOrEmpty(cpf))
             {
                 AtendenteResponse? result = await _atendenteService.GetByCpf(cpf);
+                result?.MaskCpf(loggedUser?.TipoUsuario == Domain.Enums.ETipoUsuario.ATENDENTE);
                 return Ok(result);
             }
             else if (!string.IsNullOrEmpty(name))
             {
                 List<AtendenteResponse> results = await _atendenteService.GetByName(name);
+                results.ForEach(result => result.MaskCpf(loggedUser?.TipoUsuario == Domain.Enums.ETipoUsuario.ATENDENTE));
                 return Ok(results);
             }
             else
             {
                 List<AtendenteResponse> results = await _atendenteService.GetAll();
+                results.ForEach(result => result.MaskCpf(loggedUser?.TipoUsuario == Domain.Enums.ETipoUsuario.ATENDENTE));
                 return Ok(results);
             }
         }
@@ -50,7 +57,10 @@ namespace Biblioteca.Application.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(ulong id)
         {
+            var loggedUser = _loginService.GetAuthenticatedUserById(User.Identity?.Name);
+
             AtendenteResponse? result = await _atendenteService.GetById(id);
+            result?.MaskCpf(loggedUser?.TipoUsuario == Domain.Enums.ETipoUsuario.ATENDENTE);
             return Ok(result);
         }
 

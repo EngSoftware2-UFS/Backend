@@ -2,6 +2,7 @@
 using Biblioteca.Infrastructure.Context;
 using Biblioteca.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Biblioteca.Infrastructure.Repositories
 {
@@ -81,6 +82,26 @@ namespace Biblioteca.Infrastructure.Repositories
             entity.Autors = _context.Set<Autore>().Where(a => idAutores.Contains(a.Id)).ToList();
             _context.Set<Obra>().Update(entity);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Obra>> GetByIsbn(string isbn)
+        {
+            return await _context.Set<Obra>()
+                .Where(o => o.Isbn.Contains(isbn))
+                .Include(obra => obra.Autors)
+                .Include(obra => obra.Genero)
+                .Include(obra => obra.Editora)
+                .ToListAsync();
+        }
+
+        public async Task<List<Obra>> GetByAuthor(string autor)
+        {
+            return await _context.Set<Obra>()
+                .Where(o => o.Autors.Any(author => author.Nome.Contains(autor)))
+                .Include(obra => obra.Autors)
+                .Include(obra => obra.Genero)
+                .Include(obra => obra.Editora)
+                .ToListAsync();
         }
     }
 }

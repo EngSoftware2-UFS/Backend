@@ -3,6 +3,7 @@ using Biblioteca.Domain.Interfaces;
 using Biblioteca.Infrastructure.Repositories.Interfaces;
 using AutoMapper;
 using Biblioteca.Domain.Models.Requests;
+using Biblioteca.Services.Common;
 
 namespace Biblioteca.Services
 {
@@ -19,6 +20,14 @@ namespace Biblioteca.Services
 
         public async Task Add(AddBibliotecarioRequest request)
         {
+            if (!Validator.IsCpf(request.CPF))
+                throw new InvalidOperationException("Cpf inválido.");
+
+            if (!Validator.IsEmail(request.Email))
+                throw new InvalidOperationException("E-mail inválido.");
+
+            request.TrimCpf();
+
             Bibliotecario? bibliotecario = await _bibliotecarioRepository.GetByEmailOrCpf(request.Email, request.CPF);
             if (bibliotecario != null)
                 throw new OperationCanceledException("Cpf ou E-mail inválido.");
@@ -63,6 +72,12 @@ namespace Biblioteca.Services
             if (bibliotecario == null)
                 throw new KeyNotFoundException("Not Found.");
 
+            if (!string.IsNullOrEmpty(request.Cpf) && !Validator.IsCpf(request.Cpf))
+                throw new InvalidOperationException("Cpf inválido.");
+
+            if (!string.IsNullOrEmpty(request.Email) && !Validator.IsEmail(request.Email))
+                throw new InvalidOperationException("E-mail inválido.");
+
             if (!string.IsNullOrEmpty(request.Email) || !string.IsNullOrEmpty(request.Cpf))
             {
                 Bibliotecario? bibliotecarioEmail = await _bibliotecarioRepository.GetByEmailOrCpf(request.Email, request.Cpf);
@@ -70,6 +85,9 @@ namespace Biblioteca.Services
                 if (bibliotecarioEmail != null && bibliotecarioEmail.Id != request.Id)
                     throw new OperationCanceledException("Cpf ou E-mail inválido.");
             }
+
+            if (!string.IsNullOrEmpty(request.Cpf))
+                request.TrimCpf();
 
             bibliotecario.Cpf = request.Cpf ?? bibliotecario.Cpf;
             bibliotecario.Nome = request.Nome ?? bibliotecario.Nome;

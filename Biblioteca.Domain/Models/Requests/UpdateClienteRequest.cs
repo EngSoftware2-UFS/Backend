@@ -13,4 +13,10 @@ public partial class UpdateClienteRequest
 
     public string? Email { get; set; } = null!;
     public UpdateEnderecoRequest? Endereco { get; set; }
+
+    public void TrimCpf()
+    {
+        Cpf = Cpf?.Trim();
+        Cpf = Cpf?.Replace(".", "").Replace("-", "");
+    }
 }

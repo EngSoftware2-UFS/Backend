@@ -23,5 +23,11 @@ namespace Biblioteca.Domain.Models.Requests
             Senha = BC.HashPassword(senha, BC.GenerateSalt(10));
             DataCadastro = DateTime.UtcNow;
         }
+
+        public void TrimCpf()
+        {
+            CPF = CPF.Trim();
+            CPF = CPF.Replace(".", "").Replace("-", "");
+        }
     }
 }

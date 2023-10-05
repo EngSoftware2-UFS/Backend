@@ -3,6 +3,7 @@ using Biblioteca.Infrastructure.Repositories.Interfaces;
 using Biblioteca.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Domain.Views;
+using Biblioteca.Domain.Enums;
 
 namespace Biblioteca.Infrastructure.Repositories
 {
@@ -94,6 +95,12 @@ namespace Biblioteca.Infrastructure.Repositories
                                                     JOIN obras o ON (o.id = ex.obraId)
                                                     JOIN clientes c ON (c.id = e.clienteId)
                                                     WHERE c.nome LIKE '%{nomeCliente}%'").ToListAsync();
+        }
+
+        public async Task<int> GetDevolucoesPendentes(ulong clientId)
+        {
+            return await _context.Emprestimos.CountAsync(x => x.ClienteId.Equals(clientId) 
+            && (x.Status == EStatusEmprestimo.ATIVO.ToString() || x.Status == EStatusEmprestimo.ATRASADO.ToString()));
         }
 
         public async Task<List<EmprestimoExemplar>> GetExemplares(ulong emprestimoId)

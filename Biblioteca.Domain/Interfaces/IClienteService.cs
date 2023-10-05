@@ -17,6 +17,7 @@ namespace Biblioteca.Domain.Interfaces
         Task<List<EmprestimoResponse>> GetEmprestimos(ulong idCliente);
         Task<List<EmprestimoResponse>> GetHistoricoEmprestimos(ulong idCliente);
         Task<EmprestimoResponse?> GetEmprestimo(ulong idCliente, ulong idEmprestimo);
+        Task<int> GetDevolucoesPendentes(ulong clientId);
         Task Update(UpdateClienteRequest request);
         Task Delete(ulong id);
     }
