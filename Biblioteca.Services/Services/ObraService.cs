@@ -4,6 +4,8 @@ using Biblioteca.Domain.Interfaces;
 using Biblioteca.Domain.Models.Requests;
 using Biblioteca.Infrastructure.Repositories.Interfaces;
 using Biblioteca.Services.Common;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Text.RegularExpressions;
 
 namespace Biblioteca.Services.Services
 {
@@ -35,6 +37,8 @@ namespace Biblioteca.Services.Services
         {
             if (!Validator.IsIsbn(request.Isbn))
                 throw new InvalidOperationException("O ISBN informado é inválido.");
+
+            request.Isbn = Regex.Replace(request.Isbn, @"[^\d]", "");
 
             Genero? genero = await _generoRepository.GetByName(request.GeneroNome);
             if (genero == null)
@@ -116,11 +120,6 @@ namespace Biblioteca.Services.Services
             return byTitle.Where(o => o.Genero.Nome.ToLower().Equals(genero.ToLower())).ToList();
         }
 
-        //public Task ReservarObra(AddReservaRequest request)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public async Task Update(UpdateObraRequest request)
         {
             if ((!string.IsNullOrEmpty(request.EditoraNome) && string.IsNullOrEmpty(request.EditoraNacionalidade))
@@ -140,6 +139,9 @@ namespace Biblioteca.Services.Services
 
             if (!string.IsNullOrEmpty(request.Isbn) && !Validator.IsIsbn(request.Isbn))
                 throw new InvalidOperationException("O ISBN informado é inválido.");
+
+            if (!string.IsNullOrEmpty(request.Isbn))
+                request.Isbn = Regex.Replace(request.Isbn, @"[^\d]", "");
 
             if (!string.IsNullOrEmpty(request.GeneroNome))
             {
@@ -180,6 +182,17 @@ namespace Biblioteca.Services.Services
             }
 
             await _obraRepository.Update(obra, request.AutoresId);
+        }
+
+        public async Task<List<Obra>> GetByIsbn(string isbn)
+        {
+            isbn = Regex.Replace(isbn, @"[^\d]", "");
+            return await _obraRepository.GetByIsbn(isbn);
+        }
+
+        public async Task<List<Obra>> GetByAuthor(string autor)
+        {
+            return await _obraRepository.GetByAuthor(autor);
         }
     }
 }

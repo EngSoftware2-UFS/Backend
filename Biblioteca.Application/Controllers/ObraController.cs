@@ -38,21 +38,25 @@ namespace Biblioteca.Application.Controllers
             return Ok();
         }
         [HttpGet]
-        public async Task<IActionResult> Get(string? title, string? genero)
+        public async Task<IActionResult> Get(string? title, string? genero, string? isbn, string? autor)
         {
             List<Obra> obras;
 
-            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(genero))
-            {
-                obras = await _obraService.GetByTitleAndGenero(title, genero);
-            }
-            else if (!string.IsNullOrEmpty(title)) 
+            if (!string.IsNullOrEmpty(title)) 
             { 
                 obras = await _obraService.GetByTitle(title);   
             }
             else if(!string.IsNullOrEmpty(genero))
             {
                 obras = await _obraService.GetByGenero(genero);  
+            }
+            else if (!string.IsNullOrEmpty(isbn))
+            {
+                obras = await _obraService.GetByIsbn(isbn);
+            }
+            else if (!string.IsNullOrEmpty(autor))
+            {
+                obras = await _obraService.GetByAuthor(autor);
             }
             else 
             {

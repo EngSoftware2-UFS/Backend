@@ -11,6 +11,8 @@ namespace Biblioteca.Domain.Interfaces
         Task<List<Obra>> GetByTitle(string title);
         Task<Obra> GetById(ulong id);
         Task<List<Obra>> GetByGenero(string genero);
+        Task<List<Obra>> GetByIsbn(string isbn);
+        Task<List<Obra>> GetByAuthor(string autor);
         Task<List<Obra>> GetByTitleAndGenero(string title, string genero);
         Task<List<Obra>> GetAll();
 
