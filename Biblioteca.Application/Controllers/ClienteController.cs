@@ -75,6 +75,22 @@ namespace Biblioteca.Application.Controllers
             return Ok(result);
         }
 
+        [HttpGet("devolucoesPendentes")]
+        public async Task<IActionResult> GetDevolucoesPendentes()
+        {
+            var loggedUser = _loginService.GetAuthenticatedUserById(User.Identity?.Name);
+
+            if (loggedUser != null
+                && loggedUser.TipoUsuario != ETipoUsuario.CLIENTE)
+                return NotFound();
+
+            if (loggedUser == null)
+                return Unauthorized();
+
+            int result = await _clienteService.GetDevolucoesPendentes(loggedUser.Id);
+            return Ok(result);
+        }
+
         [HttpGet("{idCliente}/reservas")]
         public async Task<IActionResult> GetReservas(ulong idCliente)
         {

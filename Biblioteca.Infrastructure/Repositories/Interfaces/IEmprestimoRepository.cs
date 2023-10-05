@@ -14,6 +14,7 @@ namespace Biblioteca.Infrastructure.Repositories.Interfaces
         Task<Emprestimo?> GetById(ulong id);
         Task<List<EmprestimosView>> GetByClientId(ulong idCliente);
         Task<List<EmprestimosView>> GetByClientName(string nomeCliente);
+        Task<int> GetDevolucoesPendentes(ulong clientId);
         Task<List<EmprestimoExemplar>> GetExemplares(ulong emprestimoId);
         void VerifyInadimplencia();
     }

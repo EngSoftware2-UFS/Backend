@@ -278,5 +278,10 @@ namespace Biblioteca.Services
         {
             await _clienteRepository.Delete(id);
         }
+
+        public async Task<int> GetDevolucoesPendentes(ulong clientId)
+        {
+            return await _emprestimoRepository.GetDevolucoesPendentes(clientId);
+        }
     }
 }
